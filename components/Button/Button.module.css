@@ -1,0 +1,41 @@
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+    
+    margin-block: .3em;
+    padding-block: 1em;
+    padding-inline: 2em;
+}
+.container:hover {
+    filter: brightness(.9);
+    cursor: pointer;
+}
+
+.success {
+    background-color: var(--success-background);
+    border-color: var(--success-background);
+}
+.error {
+    background-color: var(--error-background);
+    border-color: var(--error-background);
+}
+.neutral {
+    background-color: var(--neutral-background);
+    border-color: var(--neutral-background);
+}
+
+.plain {
+
+    border: unset;
+}
+.outlined {
+    background-color: var(--background-color);
+}
+.text {
+    margin-block: unset;
+    margin-inline: var(--letter-spacing);
+    padding-block: unset;
+    padding-inline: unset;
+
+    border: unset;
+}
