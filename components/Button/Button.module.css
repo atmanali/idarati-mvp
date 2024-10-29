@@ -2,12 +2,13 @@
     border-radius: 5px;
     border-style: solid;
     font-weight: bold;
+    font-size: inherit;
 
     margin-block: .3em;
     margin-inline: .2em;
 }
 .container:hover {
-    filter: brightness(.98);
+    filter: brightness(.96);
     cursor: pointer;
 }
 .container:active {
@@ -46,6 +47,11 @@
     background-color: var(--warning-background);
     border-color: var(--warning-background);
     color: var(--warning-foreground);
+}
+.info{
+    background-color: var(--info-background);
+    border-color: var(--info-background);
+    color: var(--info-foreground);
 }
 
 .plain {

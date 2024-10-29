@@ -6,7 +6,8 @@
     --error-background: #ee3030;
     --neutral-background: #ddd;
     --warning-background: #ddaa33;
-    
+    --info-background: #2895cf;
+
     /*        dimensions             */
     --topbar-height: 4rem;
     --sidebar-width: 4rem;
@@ -25,6 +26,7 @@
     --warning-foreground: #e87f28;
     --neutral-foreground: #555;
     --title-foreground: #1a1abc;
+    --info-foreground: #1a648b;
     --subtitle-foreground: #1a42bc;
 
     /*        dimensions             */

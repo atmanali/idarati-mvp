@@ -17,9 +17,15 @@
 }
 
 #main{
+    position: absolute;
+    top: var(--topbar-height);
+    bottom: 0;
     display: flex;
     gap: .5cm;
-    height: 100%;
+}
+
+#content {
+    overflow: auto;
 }
 
 #sidebar {
