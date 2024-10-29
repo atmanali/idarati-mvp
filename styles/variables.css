@@ -1,0 +1,25 @@
+:root{
+    /*colors*/
+    --foreground-color: #202020;
+    --background-color: #f5f5f5;
+    --success-background: #30ee30;
+    --success-foreground: #10bb10;
+    --error-background: #ee3030;
+    --error-foreground: #ee3030;
+    --neutral-background: #ddd;
+    --neutral-foreground: #555;
+    --warning-background: #ddaa33;
+    --warning-foreground: #e87f28;
+
+    /*lengths*/
+    /* elements*/
+    --topbar-height: 4rem;
+    --sidebar-width: 4rem;
+    --letter-spacing: 5px;
+    --button-border-size: 1px;
+    --button-margin-block-large: 3em;
+    --button-padding-block-large: 1em;
+    --button-padding-inline-large: 2em;
+
+    /*  text*/
+}

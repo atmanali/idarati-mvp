@@ -1,20 +1,6 @@
-:root{
-    /*colors*/
-    --foreground-color: #202020;
-    --background-color: #f5f5f5;
-    --success-background: #30ee30;
-    --error-background: #ee3030;
-    --neutral-background: #ddd;
-
-    /*lengths*/
-    /* elements*/
-    --topbar-height: 4rem;
-    --sidebar-width: 4rem;
-    --letter-spacing: 5px;
-    --button-border-size: 1px;
-    --button-margin-block-large: 3em;
-    --button-padding-block-large: 1em;
-    --button-padding-inline-large: 2em;
-
-    /*  text*/
+* {
+    box-sizing: border-box;
+}
+html {
+    color: var(--foreground-color);
 }

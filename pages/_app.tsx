@@ -1,7 +1,8 @@
-import TopBar from '@components/TopBar/Topbar';
 import '@styles/globals.css';
 import '@styles/normalize.css';
+import '@styles/variables.css';
 
+import TopBar from '@components/TopBar/Topbar';
 import { AppProps } from "next/app";
 import React from 'react';
 

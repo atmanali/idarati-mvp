@@ -9,11 +9,11 @@ type Props = React.HTMLAttributes<HTMLButtonElement> & {
     color?: 'success' | 'error' | 'warning' | 'neutral'
 }
 
-export default function Button({children, variant='plain', color='neutral'}: Props) {
+export default function Button({children, variant='text', color='neutral', size='small'}: Props) {
     useEffect(()=>{
         console.log(styles);
     }, [])
-    return (<button className={`${styles.container} ${styles[color]} ${styles[variant]}`}>
+    return (<button className={`${styles.container} ${styles[color]} ${styles[variant]} ${styles[variant+color]} ${styles[size]}`}>
         {children}
     </button>)
 }
