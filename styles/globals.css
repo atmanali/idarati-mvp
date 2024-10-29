@@ -12,7 +12,7 @@
 }
 
 #topbar {
-    color: var(--foreground-color);
+    color: var(--foreground-color-primary);
     height: var(--topbar-height);
 }
 

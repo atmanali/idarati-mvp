@@ -2,6 +2,8 @@ import Button from '@components/Button/Button';
 import React from 'react';
 export default function () {
     return (<>
+        <h1>ici c'est un titre</h1>
+        <h2>ici c'est un sous-titre</h2>
         <div>
             <Button variant={'plain'} color='success' size='small'> plain </Button>
             <Button variant={'outlined'} color='error' size='small'> outlined </Button>
@@ -33,5 +35,7 @@ export default function () {
         <Button color='warning'>warning</Button>
         <Button color='warning' variant='plain'>warning</Button>
         <Button color='warning' variant='outlined'>warning</Button>
+        <span style={{color: "var(--foreground-color-primary)"}}>primary{' '}</span>
+        <span style={{color: "var(--foreground-color-secondary)"}}>secondary</span>
     </>)
 }
