@@ -12,8 +12,16 @@
 }
 
 #topbar {
-    color: var(--foreground-color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     height: var(--topbar-height);
+
+    color: var(--foreground-color-primary);
+
+    padding-inline: 1em;
+    box-shadow: 0 0 10px 1px var(--foreground-color-primary);
 }
 
 #main{
