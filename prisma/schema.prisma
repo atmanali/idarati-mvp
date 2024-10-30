@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["omitApi", "driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id String @id @db.Uuid
+  last_name String
+  first_name String
+  email String
+  username String
+  password String
+  is_first_connection Boolean
+  logs logs[]
+  results results[]
+  roles users_roles[]
+  appointments users_appointments[]
+  courses users_courses[]
+}
+
+model roles {
+  id String @id @db.Uuid
+  name String
+  users users_roles[]
+}
+
+model appointments {
+  id Int @id @default(autoincrement())
+  name String
+  type String
+  date DateTime
+  users users_appointments[]
+}
+
+model courses {
+  id Int @id @default(autoincrement())
+  name String
+  subject String
+  teacher_id String @db.Uuid
+  students users_courses[]
+}
+
+model results {
+  id Int @id @default(autoincrement())
+  mark String
+  comment String
+  student_id String @db.Uuid
+  student users @relation(fields: [student_id], references: [id])
+}
+
+model logs {
+  id Int @id @default(autoincrement())
+  crud_action String
+  affected_table_name String
+  affected_iteration_id String
+  date DateTime
+  author_id String @db.Uuid
+  author users @relation(fields: [author_id], references: [id])
+}
+
+model users_roles {
+  user_id String @db.Uuid
+  user users @relation(fields: [user_id], references: [id])
+
+  role_id String @db.Uuid
+  role roles @relation(fields: [role_id], references: [id])
+
+  @@id([user_id, role_id])
+}
+
+model users_appointments {
+  user_id String @db.Uuid
+  user users @relation(fields: [user_id], references: [id])
+
+  appointment_id Int
+  appointment appointments @relation(fields: [appointment_id], references: [id])
+
+  accepted Boolean
+  absent Boolean
+
+  @@id([user_id, appointment_id])
+}
+
+model users_courses {
+  user_id String @db.Uuid
+  user users @relation(fields: [user_id], references: [id])
+
+  course_id Int
+  course courses @relation(fields: [course_id], references: [id])
+
+  @@id([user_id, course_id])
+}
