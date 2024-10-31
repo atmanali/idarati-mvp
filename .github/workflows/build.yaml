@@ -5,5 +5,7 @@ jobs:
   Build-App-Actions:
     runs-on: self-hosted
     steps:
+      - run: echo "before ls"
       - run: |
           ls
+      - run: echo "after ls"
