@@ -1,0 +1,12 @@
+name: "build app"
+run-name: "${{ github.actor }} is running build scripts"
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      - name: print working directory
+        run: pwd
