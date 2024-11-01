@@ -39,7 +39,8 @@ model appointments {
   id Int @id @default(autoincrement())
   name String
   type String
-  date DateTime
+  start_date DateTime
+  end_date DateTime
   users users_appointments[]
 }
 
