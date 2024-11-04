@@ -1,42 +1,26 @@
 import Button from '@components/Button/Button';
+import { createRoles, deleteRoles, getRoles, updateRoles } from '@services/roles';
 import React from 'react';
+
 export default function () {
+    const get = () => getRoles();
+    const create = () => createRoles({data: [
+        {id: '10fb859a-7b9b-422f-8241-f1d44b1186c4',name: 'super admin'},
+        {id: 'c90fadfd-2b98-495d-8797-c2c572adec27', name: 'admin'},
+        {id: 'dbebc559-4591-4a64-b701-f8aac16ea47b', name: 'teacher'},
+        {id: 'f9f10714-6822-4176-b9ae-945b21b9ba42', name: 'student'},
+    ]});
+    const update = () => updateRoles({data: {}});
+    const delet = () => deleteRoles({});
+
     return (<>
         <h1>ici c'est un titre</h1>
         <h2>ici c'est un sous-titre</h2>
         <h1>ici c'est un <Button variant='text' onClick={()=>console.log('clicked')}>bouton</Button> dans un titre</h1>
         <div>
-            <Button color='success'>success</Button>
-            <Button color='success' size='medium'>success</Button>
-            <Button color='success' size='large'>success</Button>
-
-            <Button color='success' variant='plain'>success</Button>
-            <Button color='success' variant='plain' size='medium'>success</Button>
-            <Button color='success' variant='plain' size='large'>success</Button>
-
-            <Button color='success' variant='outlined'>success</Button>
-            <Button color='success' variant='outlined' size='medium'>success</Button>
-            <Button color='success' variant='outlined' size='large'>success</Button>
-        </div>
-        <div>
-            <Button color='error'>error</Button>
-            <Button color='error' variant='plain'>error</Button>
-            <Button color='error' variant='outlined'>error</Button>
-        </div>
-        <div>
-            <Button color='warning'>warning</Button>
-            <Button color='warning' variant='plain'>warning</Button>
-            <Button color='warning' variant='outlined'>warning</Button>
-        </div>
-        <div>
-            <Button color='neutral'>neutral</Button>
-            <Button color='neutral' variant='plain'>neutral</Button>
-            <Button color='neutral' variant='outlined'>neutral</Button>
-        </div>
-        <div>
-            <Button color='info'>info</Button>
-            <Button color='info' variant='plain'>info</Button>
-            <Button color='info' variant='outlined'>info</Button>
+            <Button onClick={get}>get roles</Button>
+            <Button onClick={create}>create roles</Button>
+            <Button onClick={update}>update roles</Button>
         </div>
     </>)
 }
