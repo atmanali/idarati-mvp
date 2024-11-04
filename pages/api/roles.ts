@@ -1,14 +1,30 @@
 import createRoles from "@dataServices/roles/createRoles";
-import { NextApiRequest, NextApiResponse } from "next";
+import deleteRoles from "@dataServices/roles/deleteRoles";
+import getRoles from "@dataServices/roles/getRoles";
+import updateRoles from "@dataServices/roles/updateRoles";
 
-export default function (req: NextApiRequest, res: NextApiResponse){
-    createRoles({
-        data: [
-            {id: "10FB859A-7B9B-422F-8241-F1D44B1186C4", name:"super admin"},
-            {id: "C90FADFD-2B98-495D-8797-C2C572ADEC27", name:"admin"},
-            {id: "DBEBC559-4591-4A64-B701-F8AAC16EA47B", name:"teacher"},
-            {id: "F9F10714-6822-4176-B9AE-945B21B9BA42", name:"student"},
-        ]
-    })
-    res.json({message: "done"})
+import { NextApiRequest, NextApiResponse } from "next";
+import { isSuccessfulDataAccess } from "utils/requestsUtils";
+
+export default async function (req: NextApiRequest, res: NextApiResponse){
+    switch (req.method) {
+        case 'GET':
+            let { params } = req.query;
+            params = (params as string);
+            const gotRoles = await getRoles(params ? JSON.parse(params) : undefined);
+            res.status(isSuccessfulDataAccess(gotRoles) ? 200 : 500).send({ data: gotRoles });
+            break;
+        case 'POST':
+            const createdRoles = await createRoles(req.body);
+            res.status(isSuccessfulDataAccess(createdRoles) ? 200 : 500).json({ data: createdRoles });
+            break;
+        case 'PATCH':
+            const updatedRoles = await updateRoles(req.body);
+            res.status(isSuccessfulDataAccess(updatedRoles) ? 200 : 500).json({ data: updatedRoles });
+            break;
+        case 'DELETE':
+            const deletedRoles = await deleteRoles(req.body);
+            res.status(isSuccessfulDataAccess(deletedRoles) ? 200 : 500).json({ data: deletedRoles });
+            break;
+    }
 }
