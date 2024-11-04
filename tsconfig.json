@@ -23,7 +23,8 @@
       "@dataServices/*": ["dataServices/*"],
       "@services/*": ["services/*"],
       "@components/*": ["components/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": [
