@@ -9,7 +9,7 @@ type MyPrismaClient = PrismaClient<{
     };
 }, never>;
 
-let prisma = new PrismaClient({
+const prisma = new PrismaClient({
     omit: {
         users: {
             password: true,
@@ -17,17 +17,21 @@ let prisma = new PrismaClient({
     }
 });
 
-const handlePrismaError = (error: Error) => {
+const handlePrismaError = (error: Error & {code: string}) => {
     (error instanceof Prisma.PrismaClientKnownRequestError)
         ? console.log(`${new Date()} —— error with prisma request`)
         : console.log(`${new Date()} —— unknown error with prisma request`)
     console.log(error)
+    return 'Error'
 }
 
-export const query = async (func: (param: MyPrismaClient) => void) => {
+export const query = async (func: (param: MyPrismaClient) => Prisma.PrismaPromise<any>) => {
+    let output: any;
     try {
-        return func(prisma);
-    } catch (error) { handlePrismaError(error) }
-}
+        prisma.$connect;
+        output = await func(prisma);
+    } catch (error) { output = handlePrismaError(error) }
+    prisma.$disconnect;
 
-export default prisma;
+    return output;
+}

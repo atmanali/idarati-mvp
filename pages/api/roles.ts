@@ -1,7 +1,7 @@
-import createRoles from "@services/roles/createRoles";
+import createRoles from "@dataServices/roles/createRoles";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default function roleApiHandler(req: NextApiRequest, res: NextApiResponse){
+export default function (req: NextApiRequest, res: NextApiResponse){
     createRoles({
         data: [
             {id: "10FB859A-7B9B-422F-8241-F1D44B1186C4", name:"super admin"},
