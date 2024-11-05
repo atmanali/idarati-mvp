@@ -8,5 +8,9 @@ jobs:
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@v4
-      - name: print working directory
-        run: nvm list
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.11.0'
+      - run: npm ci
+      - run: npm run build
