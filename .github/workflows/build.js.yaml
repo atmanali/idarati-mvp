@@ -15,6 +15,4 @@ jobs:
         with:
           node-version: '22.11.0'
       - name: install node modules and run build command
-      - run: |
-          npm ci
-          npm run build
+      - run: npm ci && npm run build
