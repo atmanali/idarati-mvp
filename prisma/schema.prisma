@@ -18,10 +18,12 @@ model users {
   id String @id @db.Uuid
   last_name String
   first_name String
-  email String
-  username String
+  email String @unique
+  username String @unique
   password String
   is_first_connection Boolean
+  is_connected Boolean @default(false)
+  session_token String?
   logs logs[]
   results results[]
   roles users_roles[]
