@@ -1,16 +1,20 @@
 name: "build app"
 run-name: "${{ github.actor }} is running build scripts"
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
-    runs-on: [self-hosted, linux]
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.11.0'
-      - run: npm i
-      - run: npm run build
+      - name: install node modules and run build command
+      - run: |
+          npm ci
+          npm run build
