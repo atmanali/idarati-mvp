@@ -1,6 +1,3 @@
-export const isSuccessfulDataAccess = ( dataAccessReponse: any ) => dataAccessReponse != 'Error'
-
-
 export const initRequest = (
   method: string = "get",
   HeadersAndBody?: { headers?: {}; body?: any },

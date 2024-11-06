@@ -2,7 +2,7 @@ import createLogs from "@dataServices/logs/createLogs";
 import getLogs from "@dataServices/logs/getLogs";
 
 import { NextApiRequest, NextApiResponse } from "next";
-import { isSuccessfulDataAccess } from "utils/requestsUtils";
+import { isSuccessfulDataFetching } from "prisma/client";
 
 export default async function (req: NextApiRequest, res: NextApiResponse){
     switch (req.method) {
@@ -10,11 +10,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse){
             let { params } = req.query;
             params = (params as string);
             const gotLogs = await getLogs(params ? JSON.parse(params) : undefined);
-            res.status(isSuccessfulDataAccess(gotLogs) ? 200 : 500).send({ data: gotLogs });
+            res.status(isSuccessfulDataFetching(gotLogs) ? 200 : 500).send({ data: gotLogs });
             break;
         case 'POST':
             const createdLogs = await createLogs(req.body);
-            res.status(isSuccessfulDataAccess(createdLogs) ? 200 : 500).json({ data: createdLogs });
+            res.status(isSuccessfulDataFetching(createdLogs) ? 200 : 500).json({ data: createdLogs });
             break;
     }
 }

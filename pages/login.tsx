@@ -1,34 +1,25 @@
-import { FormEvent } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react';
+import { FormEvent } from 'react';
+import { authenticate } from '@utils/auth';
+import Form from 'next/form';
+import Button from '@components/Button/Button';
  
-export default function LoginPage() {
-  const router = useRouter()
- 
+
+export default function LoginPage() { 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
  
-    const formData = new FormData(event.currentTarget)
-    const email = formData.get('email')
-    const password = formData.get('password')
- 
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
- 
-    if (response.ok) {
-      router.push('/profile')
-    } else {
-      // Handle errors
-    }
+    const formData = new FormData(event.currentTarget);
+    const {username, password} = Object.fromEntries(formData) as Record<any, string>;
+    
+    await authenticate(username, password);
   }
  
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+    <Form action={""} onSubmit={handleSubmit}>
+      <input name="username" placeholder="username" required />
+      <input type="password" name="password" placeholder="password" required />
+      <Button buttonProps={{ type: 'submit' }}>Login</Button>
+    </Form>
   )
 }

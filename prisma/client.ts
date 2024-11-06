@@ -17,12 +17,13 @@ const prisma = new PrismaClient({
     }
 });
 
+const dataFetchingFailed = 'dataFetchingFailed'
 const handlePrismaError = (error: Error & {code: string}) => {
     (error instanceof Prisma.PrismaClientKnownRequestError)
         ? console.log(`${new Date()} —— error with prisma request`)
         : console.log(`${new Date()} —— unknown error with prisma request`)
     console.log(error)
-    return 'Error'
+    return dataFetchingFailed;
 }
 
 export const query = async (func: (param: MyPrismaClient) => Prisma.PrismaPromise<any>) => {
@@ -35,3 +36,12 @@ export const query = async (func: (param: MyPrismaClient) => Prisma.PrismaPromis
 
     return output;
 }
+const allFieldsAreWellDefined = (anyObject: any) => {
+    if (!Boolean(anyObject)) return false;
+    let output = true;
+    Object.keys(anyObject)
+        .map((key: any) => output = output && Boolean(anyObject[key]))
+    return output;
+}
+export const isSuccessfulDataFetching = ( dataAccessReponse: any ) =>
+    allFieldsAreWellDefined(dataAccessReponse) && dataAccessReponse != dataFetchingFailed
