@@ -4,7 +4,7 @@ import styles from "./Button.module.css";
 
 
 type Props = {
-    buttonProps: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'>;
+    buttonProps?: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'>;
     children?: React.ReactNode;
     variant?: 'plain' | 'outlined' | 'text';
     size?: 'small' | 'medium' | 'large';

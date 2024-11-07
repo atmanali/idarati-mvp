@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import { authenticate } from '@utils/auth';
+import { authenticate } from '@services/auth';
 import Form from 'next/form';
 import Button from '@components/Button/Button';
  

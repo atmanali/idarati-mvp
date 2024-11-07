@@ -12,6 +12,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
       }
     })
   )
-  if (isSuccessfulDataFetching(foundUser)) res.status(200).json({data: foundUser});
+  if (isSuccessfulDataFetching(foundUser)) {
+    
+    res.status(200).json({data: foundUser});
+  }
   else res.status(403).json({error: 'you do not exist buddy'});
 }
