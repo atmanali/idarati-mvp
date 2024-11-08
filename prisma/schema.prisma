@@ -66,8 +66,9 @@ model logs {
   id Int @id @default(autoincrement())
   crud_action String
   affected_table_name String
+  affected_fields_names String
   affected_iteration_id String
-  date DateTime
+  date DateTime @default(now())
   author_id String @db.Uuid
   author users @relation(fields: [author_id], references: [id])
 }
