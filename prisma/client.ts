@@ -18,11 +18,8 @@ const prisma = new PrismaClient({
 });
 
 const failedDataFetching = 'dataFetchingFailed'
-const handlePrismaError = (error: Error & {code: string}) => {
-    (error instanceof Prisma.PrismaClientKnownRequestError)
-        ? console.log(`${new Date()} —— error with prisma request`)
-        : console.log(`${new Date()} —— unknown error with prisma request`)
-    console.log(error)
+const handlePrismaError = (error: Error ) => {
+    console.log(error);
     return failedDataFetching;
 }
 

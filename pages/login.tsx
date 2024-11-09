@@ -1,18 +1,20 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import { authenticate } from '@services/auth';
+import useAuth, { authenticate } from '@services/auth';
 import Form from 'next/form';
 import Button from '@components/Button/Button';
  
 
 export default function LoginPage() { 
+  const authData = useAuth('atman', 'atmanali');
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
  
     const formData = new FormData(event.currentTarget);
     const {username, password} = Object.fromEntries(formData) as Record<any, string>;
     
-    await authenticate(username, password);
+    //await authenticate(username, password);
+    console.log(authData);
   }
  
   return (

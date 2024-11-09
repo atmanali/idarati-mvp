@@ -13,9 +13,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     const user = await query(
       prisma => prisma.users.findFirst({ where: {username, password } })
     )
-    const sessionToken = generateSessionToken(username);
-    isSuccessfulDataFetching(await saveSessionTokenFor( sessionToken, user ))
-      ? res.status(200).json({ data: { user, sessionToken } })
+    const session_token = generateSessionToken(username);
+    isSuccessfulDataFetching(await saveSessionTokenFor( session_token, user ))
+      ? res.status(200).json({ data: { user, session_token } })
       : res.status(401).json({ error: 'bad credentials' })
   }
   else res.status(401).json({ error: 'you do not exist buddy' });
