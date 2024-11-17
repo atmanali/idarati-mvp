@@ -1,0 +1,25 @@
+.container {
+    display: block;
+    margin-inline-end: 1em;
+    padding: .5em;
+    border-radius: 50px;
+    justify-items: center;
+}
+.container:hover {
+    filter: contrast(0);
+    cursor: pointer;
+}
+
+.selectedDefault {
+    background-color: var(--selected);
+    opacity: 0;
+
+    margin-top: .25em;
+    border-radius: 1px;
+
+    width: 90%;
+    height: 2px;
+}
+.selected {
+    opacity: 1;
+}
