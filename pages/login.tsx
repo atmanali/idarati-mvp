@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormEvent } from 'react';
 import Form from 'next/form';
-import Button from '@components/Button/Button';
+import Button from '@components/Button/';
 import { LoginProps } from '@components/AuthenticationProvider';
 import { useMutation } from '@tanstack/react-query';
 import { authenticate, authKey, AuthProps } from '@services/auth';
