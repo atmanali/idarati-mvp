@@ -29,6 +29,5 @@ export const initRequest = ( method: string = "get", HeadersAndBody?: { headers?
 export async function formatResponse<T>(response:Response, formattingCallBack ?: (data: any) => T): Promise<ResponseDataType<T>> {
   if (response.status >= 400) return Promise.reject();
   const formattedOutput = formattingCallBack ? formattingCallBack(await response.json()) : await response.json();
-  console.log({status: response.status, ...formattedOutput})
   return {status: response.status, ...formattedOutput};
 }

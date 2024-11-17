@@ -17,9 +17,6 @@ export default function LoginPage() {
     mutationFn: async ({username, password}: LoginProps): Promise<AuthProps> => {
         return authenticate(username, password);
     },
-    onMutate: async ({username, password}: LoginProps) => {
-        console.log('from onMutate', {username, password})
-    },
     onSuccess: (data: AuthProps) => {
         // todo: alert('succeed');
         queryClient.setQueryData([authKey], data);

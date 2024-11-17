@@ -2,13 +2,9 @@ import { authenticationCheck, AuthProps } from "@services/auth";
 
 export const checkAuthentication = async (): Promise<AuthProps> => {
     const { session_token, user } = getAuthInformation();
-    if (!session_token || ! user?.username) {
-        console.log('you are not authenticated');
-        return Promise.reject();
-    }
-    console.log('you still need to pass another test');
+    if (!session_token || ! user?.username) return Promise.reject();
+
     const connected = await authenticationCheck();
-    console.log({connected});
     if (!connected) {
         deleteAuthInformation();
         return {session_expired: !connected}
