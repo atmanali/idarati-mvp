@@ -1,61 +1,41 @@
 import { useQuery } from "@tanstack/react-query";
-import { initRequest } from "../utils/requestsUtils";
-import { query } from "prisma/client";
+import { formatResponse, initRequest } from "../utils/requestsUtils";
+import { checkAuthentication } from "@utils/authUtils";
 
 export const authKey = 'authenticate';
+export type AuthProps = {
+    session_token?: string;
+    user?: any;
+    session_expired?: boolean;
+}
 
-export const authenticate = async (username: string, password: string) : Promise<{session_token: string; user: any}> => {
+export const authenticate = async (username: string, password: string) : Promise<AuthProps> => {
     const route = 'api/auth/login';
     const init = initRequest('post', {
         body: { username, password }
     });
 
-    return fetch(route, init).then(async (res) => (await res.json()).data);
+    return fetch(route, init).then(formatResponse<AuthProps>).then((jsonFormat) => jsonFormat.data);
 }
 
-const updateSession = async (username: string) => {
-    const ok = await query(
-        prisma => prisma.users.update({
-            data: {session_token: ''},
-            where: { username },
-        })
-    )
+export const authenticationCheck = async () => {
+    const route = 'api/auth/check-authentication';
+    const init = initRequest('get');
+
+    return fetch(route, init).then(formatResponse<{connected: boolean}>).then(json => json.data.connected);
 }
 
-/**
- * 
- * @param username to be deleted
- * @param password to be deleted
- * @returns { session_token: string, user: UserModel, isFetched: boolean }
- * 
- * Params will be moved to change the behavior of this hook
- *  It should check if there is a session token in cache
- *      If there is
- *          check valididty (send the token in a POST request to the backend)
- *          If token is valid
- *              nothing to do
- *          Else
- *              redirect to login page
- *      Else
- *          redirect to login page
- */
-const useAuth = (username: string, password: string) => {
-    const { data, isFetched } = useQuery({
+
+const useAuth = () => {
+    const {data, isFetched, refetch} = useQuery({
         queryKey: [authKey],
-        queryFn: async () => await authenticate(username, password),
-        refetchInterval:
-        1000 * 60 * parseInt(process.env.NEXT_PUBLIC_TOKEN_EXPIRES as string),
-      refetchIntervalInBackground: true,
+        queryFn: checkAuthentication,
+        initialData: {
+            session_expired: true
+        },
+        refetchInterval: 1000*60*parseInt(process.env.NEXT_PUBLIC_TOKEN_EXPIRES as string),
     })
-    const { session_token, user } = data;
-    //console.log(data);
-    return {
-        session_token,
-        user,
-        isFetched
-    }
+
+    return {isFetched, data, refetch};
 }
-
-// Implement mutators for useAuth. One mutator for login functionnality, another for token verification
-
 export default useAuth;

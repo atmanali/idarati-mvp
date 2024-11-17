@@ -5,6 +5,7 @@ type MyPrismaClient = PrismaClient<{
     omit: {
         users: {
             password: true;
+            session_token: true;
         };
     };
 }, never>;
@@ -13,6 +14,7 @@ const prisma = new PrismaClient({
     omit: {
         users: {
             password: true,
+            session_token: true,
         }
     }
 });
