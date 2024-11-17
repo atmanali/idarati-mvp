@@ -1,18 +1,20 @@
-import React, { ReactNode, useEffect } from "react";
+import React from "react";
 import styles from "./Button.module.css";
 
 
 
-type Props = React.HTMLAttributes<HTMLButtonElement> & {
+type Props = {
+    buttonProps?: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'>;
+    children?: React.ReactNode;
     variant?: 'plain' | 'outlined' | 'text';
     size?: 'small' | 'medium' | 'large';
     color?: 'success' | 'error' | 'warning' | 'neutral' | 'info'
 }
 
-export default function Button({children, variant='text', color='neutral', size='small', ...props}: Props) {
+export default function Button({variant='text', color='neutral', size='small', buttonProps, children}: Props) {
     return (
         <button
-            {...props} 
+            {...buttonProps} 
             className={`${styles.container} ${styles[color]} ${styles[variant]} ${styles[size]}`}
         >
             {children}
