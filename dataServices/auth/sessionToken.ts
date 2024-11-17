@@ -1,4 +1,4 @@
-import { randomBytes, createHmac } from 'node:crypto';
+import { randomBytes, createHmac } from "node:crypto";
 
 export const hashMyToken = (toBeHashed: string) => createHmac('sha512', process.env.SECRET_GENERATOR).update(toBeHashed).digest('hex')
 export const generateSessionToken = (username: string) => {

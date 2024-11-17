@@ -1,4 +1,4 @@
-import Button from "@components/Button/Button";
+import Button from "@components/Button";
 import { UsersModel } from "@models/index";
 import useAuth, { authKey } from "@services/auth";
 import queryClient from "@utils/queryClientUtils";

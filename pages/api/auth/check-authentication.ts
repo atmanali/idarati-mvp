@@ -1,6 +1,6 @@
-import { hashMyToken } from '@dataServices/auth/sessionToken';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { isSuccessfulDataFetching, query } from 'prisma/client';
+import { hashMyToken } from "@dataServices/auth/sessionToken";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { isSuccessfulDataFetching, query } from "prisma/client";
 
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse) {
