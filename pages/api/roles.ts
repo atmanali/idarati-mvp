@@ -4,7 +4,7 @@ import getRoles from "@dataServices/roles/getRoles";
 import updateRoles from "@dataServices/roles/updateRoles";
 
 import { NextApiRequest, NextApiResponse } from "next";
-import { isSuccessfulDataAccess } from "utils/requestsUtils";
+import { isSuccessfulDataFetching } from "prisma/client";
 
 export default async function (req: NextApiRequest, res: NextApiResponse){
     switch (req.method) {
@@ -12,19 +12,19 @@ export default async function (req: NextApiRequest, res: NextApiResponse){
             let { params } = req.query;
             params = (params as string);
             const gotRoles = await getRoles(params ? JSON.parse(params) : undefined);
-            res.status(isSuccessfulDataAccess(gotRoles) ? 200 : 500).send({ data: gotRoles });
+            res.status(isSuccessfulDataFetching(gotRoles) ? 200 : 500).send({ data: gotRoles });
             break;
         case 'POST':
             const createdRoles = await createRoles(req.body);
-            res.status(isSuccessfulDataAccess(createdRoles) ? 200 : 500).json({ data: createdRoles });
+            res.status(isSuccessfulDataFetching(createdRoles) ? 200 : 500).json({ data: createdRoles });
             break;
         case 'PATCH':
             const updatedRoles = await updateRoles(req.body);
-            res.status(isSuccessfulDataAccess(updatedRoles) ? 200 : 500).json({ data: updatedRoles });
+            res.status(isSuccessfulDataFetching(updatedRoles) ? 200 : 500).json({ data: updatedRoles });
             break;
         case 'DELETE':
             const deletedRoles = await deleteRoles(req.body);
-            res.status(isSuccessfulDataAccess(deletedRoles) ? 200 : 500).json({ data: deletedRoles });
+            res.status(isSuccessfulDataFetching(deletedRoles) ? 200 : 500).json({ data: deletedRoles });
             break;
     }
 }

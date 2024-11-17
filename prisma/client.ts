@@ -5,6 +5,7 @@ type MyPrismaClient = PrismaClient<{
     omit: {
         users: {
             password: true;
+            session_token: true;
         };
     };
 }, never>;
@@ -13,25 +14,31 @@ const prisma = new PrismaClient({
     omit: {
         users: {
             password: true,
+            session_token: true,
         }
     }
 });
 
-const handlePrismaError = (error: Error & {code: string}) => {
-    (error instanceof Prisma.PrismaClientKnownRequestError)
-        ? console.log(`${new Date()} —— error with prisma request`)
-        : console.log(`${new Date()} —— unknown error with prisma request`)
-    console.log(error)
-    return 'Error'
+const failedDataFetching = 'dataFetchingFailed'
+const handlePrismaError = (error: Error ) => {
+    console.log(error);
+    return failedDataFetching;
 }
 
 export const query = async (func: (param: MyPrismaClient) => Prisma.PrismaPromise<any>) => {
-    let output: any;
+    let prismaResponse;
     try {
         prisma.$connect;
-        output = await func(prisma);
-    } catch (error) { output = handlePrismaError(error) }
+        prismaResponse = await func(prisma);
+    } catch (error) { return handlePrismaError(error) }
     prisma.$disconnect;
-
-    return output;
+    return prismaResponse;
 }
+const totallyNullObject = (anyObject: any) => {
+    for (const key in Object.keys(anyObject)){
+        if (anyObject[key]) return false;
+    }
+    return true;
+}
+const isFailedDataFetching = ( dataAccessReponse: any ) => !dataAccessReponse || dataAccessReponse === failedDataFetching;
+export const isSuccessfulDataFetching = ( dataAccessReponse: any ) => !isFailedDataFetching(dataAccessReponse);
