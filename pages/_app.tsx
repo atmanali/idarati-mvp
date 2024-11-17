@@ -2,7 +2,7 @@ import '@styles/globals.css';
 import '@styles/normalize.css';
 import '@styles/variables.css';
 
-import TopBar from '@components/TopBar/Topbar';
+import TopBar from '@components/TopBar';
 import { AppProps } from "next/app";
 import React, { useState } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
