@@ -14,6 +14,13 @@
 .container:active {
     filter: brightness(.9);
 }
+.container:disabled {
+    background-color: color-mix(in srgb, var(--neutral-background), white);
+    color: color-mix(in srgb, var(--neutral-foreground), white);
+    border: unset;
+    cursor: not-allowed;
+    filter: unset;
+}
 
 .small {
     padding-block: .5em;

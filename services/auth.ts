@@ -18,13 +18,19 @@ export const authenticate = async (username: string, password: string) : Promise
     return fetch(route, init).then(formatResponse<AuthProps>).then((jsonFormat) => jsonFormat.data);
 }
 
+export const usernameCheck = async (username: string) => {
+    const route = `api/auth/check-authentication?username=${username}`;
+    const init = initRequest('get')
+
+    return fetch(route, init).then(formatResponse<{isValidUsername: boolean}>).then(json => json.data.isValidUsername);
+}
+
 export const authenticationCheck = async () => {
     const route = 'api/auth/check-authentication';
     const init = initRequest('get');
 
     return fetch(route, init).then(formatResponse<{connected: boolean}>).then(json => json.data.connected);
 }
-
 
 const useAuth = () => {
     const {data, isFetched, refetch} = useQuery({

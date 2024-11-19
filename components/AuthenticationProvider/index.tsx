@@ -5,17 +5,21 @@ import React, { useEffect, useState } from "react"
 
 type Props = {
     children: React.ReactNode;
-    setUser: React.Dispatch<React.SetStateAction<UsersModel>>;
+    setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export type LoginProps = {
     username: string;
     password: string;
 }
 
-export default function AuthenticationProvider ({ children, setUser }: Props) {
+export default function AuthenticationProvider ({ children, setIsConnected }: Props) {
     const [authenticated, setAuthenticated] = useState(false);
     const { data, isFetched } = useAuth();
     const router = useRouter();
+
+    useEffect(() => {
+        console.log(data);
+    }, [data])
 
     useEffect(() => {
         if (isFetched) {
@@ -23,7 +27,7 @@ export default function AuthenticationProvider ({ children, setUser }: Props) {
                 router.push(`/login?r=${router.asPath.includes("login") ? "/" : router.asPath}`);
         }
         setAuthenticated(!data?.session_expired);
-        !data?.session_expired && setUser(data.user);
+        setIsConnected(data && !data?.session_expired);
     }, [isFetched, data?.session_expired, router?.asPath])
 
     return (<>

@@ -1,0 +1,16 @@
+
+.success {
+    color: var(--success-background);
+}
+.error {
+    color: var(--error-background);
+}
+.neutral {
+    color: var(--neutral-background);
+}
+.warning {
+    color: var(--warning-background);
+}
+.info{
+    color: var(--info-background);
+}

@@ -40,10 +40,11 @@
 }
 
 #content {
+    display: flex;
+    justify-content: center;
     overflow: auto;
     flex: 1;
     margin: 1em;
-    margin-left: 0;
 }
 
 #sidebar {

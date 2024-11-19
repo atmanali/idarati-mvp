@@ -1,5 +1,5 @@
+import { hashMyToken } from "@utils/crypting";
 import { isSuccessfulDataFetching, query } from "prisma/client"
-import { hashMyToken } from "./sessionToken"
 
 export const saveSessionTokenFor = async (sessionToken: string, user: any) => {
     const session_token = hashMyToken(sessionToken);

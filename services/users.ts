@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { initRequest } from "utils/requestsUtils";
+import { formatResponse, initRequest } from "utils/requestsUtils";
 
 const apiRoute = "api/users";
 
@@ -21,4 +21,11 @@ export const updateUsers = (params: Prisma.usersUpdateManyArgs) => {
 export const deleteUsers = (params: Prisma.usersDeleteManyArgs) => {
     const init = initRequest('delete', { body: params });
     return fetch(apiRoute, init);
+}
+
+export const changePassword = (username: string) => {
+    const route = `api/auth/reset-password?username=${username}`;
+    const init = initRequest('get');
+
+    return fetch(route, init).then(formatResponse<{password: string}>).then(json => json.data.password);
 }

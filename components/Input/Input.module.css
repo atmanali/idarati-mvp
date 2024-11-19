@@ -1,0 +1,33 @@
+.Input {
+    height: 2em;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 1em;
+}
+
+.medium {
+    height: 2.5em;
+    border-width: 1.5px;
+}
+.large {
+    height: 3em;
+    border-width: 2px;
+}
+
+
+.success {
+    border-color: var(--success-background);
+}
+.error {
+    border-color: var(--error-background);
+}
+.neutral {
+    border-color: var(--neutral-background);
+}
+.warning {
+    border-color: var(--warning-background);
+}
+.info{
+    border-color: var(--info-background);
+}
