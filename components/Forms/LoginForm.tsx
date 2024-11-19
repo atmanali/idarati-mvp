@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FormEvent } from "react";
 import Form from "next/form";
 import Button from "@components/Button";
@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import styles from "./loginForm.module.css";
 import Input from "@components/Input";
 import ResetPasswordModal from "@components/Modals/ResetPasswordModal";
+import Label from "@components/Label/Label";
 
 export default function LoginForm() {
     const [inputColor, setInputColor] = useState<'success' | 'error' | 'warning' | 'neutral' | 'info'>('neutral');
@@ -78,11 +79,13 @@ export default function LoginForm() {
         <div className={styles.body}>
             <Input type="text" name="username" placeholder="nom d'utilisateur" color={inputColor} onKeyDown={handleEnterPressed} required />
             <Input type="password" name="password" placeholder="mot de passe" color={inputColor} onKeyDown={handleEnterPressed} required />
-            <span hidden={correctAuthenticationInformation}>Vos informations de connexion sont erronées.</span>
-            <span hidden={correctAuthenticationInformation}>
+            <Label color="error" hidden={correctAuthenticationInformation}>
+              Vos informations de connexion sont erronées.
+            </Label>
+            <Label color="error" hidden={correctAuthenticationInformation}>
               Pour réinitialiser votre mot de passe
               <Button color="error" onClick={handleResetPasswordClick}>clickez-ici</Button>
-            </span>
+            </Label>
         </div>
         <footer>
             <Button type='submit' variant="plain" color="info" >Login</Button>

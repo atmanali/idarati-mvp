@@ -35,19 +35,9 @@
     flex: 1;
     width: 100%;
 
+
     justify-content: center;
     gap: 1.5em;
-}
-.body > span {
-    color: var(--error-foreground);
-    font-size: small;
-}
-.body > span > span {
-    filter: contrast(.5);
-    cursor: pointer;
-}
-.body > span > span:hover {
-    text-decoration: underline;
 }
 
 

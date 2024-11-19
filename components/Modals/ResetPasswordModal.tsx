@@ -34,7 +34,7 @@ export default function ({title="Réinitialiser votre mot de passe", username, .
             }}
         >
             <Input name="username" placeholder="nom d'utilisateur" value={username} disabled required />
-            <Label hidden={!disabled} color="error" >Votre nom d'utilisateur n'est pas reconnu 😢</Label>
+            <Label hidden={!disabled} color="error" >Votre nom d'utilisateur n'est pas reconnu</Label>
             <Label hidden={disabled} >
                 Cliquez sur le bouton de confirmation pour recevoir un nouveau mot de passe
             </Label>
