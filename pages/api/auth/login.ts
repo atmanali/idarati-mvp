@@ -1,5 +1,6 @@
 import { saveSessionTokenFor } from "@dataServices/auth/login";
 import { generateSessionToken } from "@dataServices/auth/sessionToken";
+import { hashPassword } from "@utils/crypting";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { isSuccessfulDataFetching, query } from "prisma/client";
  
@@ -11,7 +12,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   )
   if (isSuccessfulDataFetching(userExists)) {
     const user = await query(
-      prisma => prisma.users.findFirst({ where: {username, password } })
+      prisma => prisma.users.findFirst({ where: {username, password: hashPassword(password) } })
     )
     const session_token = generateSessionToken(username);
     isSuccessfulDataFetching(await saveSessionTokenFor( session_token, user ))
