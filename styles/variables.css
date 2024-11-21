@@ -12,6 +12,7 @@
     /*        dimensions             */
     --topbar-height: 4rem;
     --sidebar-width: 4rem;
+    --sidebar-open-width: 9em;
     --letter-spacing: 5px;
     --button-border-size: 1px;
     --button-margin-block-large: 3em;
