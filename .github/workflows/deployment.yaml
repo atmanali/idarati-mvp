@@ -1,4 +1,4 @@
-name: Build CI
+name: Deployment
 
 on:
   pull_request:
@@ -7,17 +7,22 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  install:
     runs-on: self-hosted
-
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: Installing packages
         uses: actions/setup-node@v4
         with:
           node-version: '22.11.0'
       - run: npm ci
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Building
       - run: npm run build
+  configurate:
+    runs-on: self-hosted
+    steps:
       - run: cp ../.env .
       - run: npx prisma migrate dev
