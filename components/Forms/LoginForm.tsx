@@ -8,7 +8,7 @@ import { authenticate, authKey, AuthProps } from "@services/auth";
 import queryClient from "@utils/queryClientUtils";
 import { setAuthInformation } from "@utils/authUtils";
 import { useRouter } from "next/router";
-import styles from "./loginForm.module.css";
+import styles from "./LoginForm.module.css";
 import Input from "@components/Input";
 import ResetPasswordModal from "@components/Modals/ResetPasswordModal";
 import Label from "@components/Label/Label";
