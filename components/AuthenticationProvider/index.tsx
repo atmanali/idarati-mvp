@@ -1,15 +1,10 @@
-import { UsersModel } from "@models/index";
-import useAuth, { authKey } from "@services/auth";
+import useAuth from "@services/auth";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react"
 
 type Props = {
     children: React.ReactNode;
     setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
-}
-export type LoginProps = {
-    username: string;
-    password: string;
 }
 
 export default function AuthenticationProvider ({ children, setIsConnected }: Props) {
@@ -18,13 +13,9 @@ export default function AuthenticationProvider ({ children, setIsConnected }: Pr
     const router = useRouter();
 
     useEffect(() => {
-        console.log(data);
-    }, [data])
-
-    useEffect(() => {
         if (isFetched) {
             if (data?.session_expired)
-                router.push(`/login?r=${router.asPath.includes("login") ? "/" : router.asPath}`);
+                router.push(`/login?r=${router.pathname==='/login' ? "/" : router.asPath}`);
         }
         setAuthenticated(!data?.session_expired);
         setIsConnected(data && !data?.session_expired);
