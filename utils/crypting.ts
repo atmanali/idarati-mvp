@@ -1,17 +1,15 @@
 import { createHmac, randomBytes } from "node:crypto";
 import { totalRegex } from "./regex";
-import { join } from "node:path";
+
 
 export const hashMyToken = (toBeHashed: string) =>
-    createHmac('sha512', process.env.SECRET_GENERATOR).update(toBeHashed).digest('hex')
+    createHmac('sha512', process.env.TOKEN_HASH_KEY).update(toBeHashed).digest('hex')
 
 export const randomStringOfLength = (length: number) => {
     randomBytes(length).toString('hex');
 }
 
-export const hashPassword = (password: string) => {
-    createHmac('sha512', process.env.SECRET_GENERATOR).update(password).digest('hex')
-}
+export const hashPassword = (password: string) => createHmac('sha512', process.env.PASSWORD_HASH_KEY).update(password).digest('hex')
 
 const randomInteger = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1)) + min
