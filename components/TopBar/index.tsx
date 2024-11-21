@@ -42,7 +42,7 @@ export default function TopBar({ tabs }: Props) {
             <Tab tabs={tabs}/>
             <div>
                 <span>{userName(data?.user)}</span>
-                <Image src={data?.user?.avatar || "/photo.svg"} alt="photo de profil" width={40} height={40} />
+                <Image src={data?.user?.avatar || "/default-avatar.svg"} alt="photo de profil" width={40} height={40} />
                 { // disconnect
                     <Button variant="plain" color="warning" onClick={logout}/>
                 }
