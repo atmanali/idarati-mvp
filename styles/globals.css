@@ -49,10 +49,15 @@
 
 #sidebar {
     height: 100%;
-    width: var(--sidebar-width);
 
     padding-block: 1em;
 
     display: flex;
     flex-direction: column;
+
+    box-shadow: 0 10px 10px 1px var(--foreground-color-primary);
+}
+
+.smallText {
+    font-size: small;
 }

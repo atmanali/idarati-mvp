@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@utils/queryClientUtils";
 import AuthenticationProvider from "@components/AuthenticationProvider";
+import Sidebar from '@components/Sidebar';
 
 
 const tabs = [
@@ -23,6 +24,11 @@ export default function App({Component, pageProps}: AppProps) {
             <AuthenticationProvider setIsConnected={setIsConnected} >
                 {isConnected && <TopBar tabs={tabs} />}
                 <main id="main">
+                    {isConnected &&
+                        <aside id="sidebar">
+                            <Sidebar />
+                        </aside>
+                    }
                     <div  id="content">
                         <Component {...pageProps}/>
                     </div>
