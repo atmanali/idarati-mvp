@@ -19,10 +19,12 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@main
       - name: Building
       - run: npm run build
   configurate:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@main
       - run: cp ../.env .
       - run: npx prisma migrate dev
