@@ -1,4 +1,4 @@
-import { randomPassword } from "@utils/crypting";
+import { hashPassword, randomPassword } from "@utils/crypting";
 import { NextApiRequest, NextApiResponse } from "next";
 import { isSuccessfulDataFetching, query } from "prisma/client";
 
@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const password = randomPassword(0);
         const resetPassword = await query (
             prisma => prisma.users.update({
-                data: { password },
+                data: { password: hashPassword(password) },
                 where: { username }
             })
         )
