@@ -5,18 +5,33 @@ import Button, { ButtonProps } from "@components/Button";
 
 export type ModalProps = {
     open: boolean;
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
     title?: string;
     showFooter?: boolean;
     onCancel?: React.MouseEventHandler<HTMLDivElement|HTMLButtonElement>;
-    cancelButtonProps?: ButtonProps & {label?: string};
-    confirmButtonProps?: ButtonProps & {label?: string};
+    isForm?: boolean;
+    cancelButtonProps?: ButtonProps & { label?: string };
+    confirmButtonProps?: ButtonProps & { label?: string };
 }
 
-export default function ({open, title, children, onCancel, cancelButtonProps, confirmButtonProps, showFooter=false}: ModalProps & {children: React.ReactNode}) {
+export default function ({
+    open,
+    setOpen,
+    title,
+    children,
+    onCancel,
+    isForm=false,
+    cancelButtonProps,
+    confirmButtonProps,
+    showFooter=false}: ModalProps & {children: React.ReactNode}
+) {
+
+
     const handleMouseCancel: React.MouseEventHandler<HTMLDivElement|HTMLButtonElement> = (event) => {
         event.stopPropagation();
         event.preventDefault();
         onCancel && onCancel(event);
+        setOpen && setOpen(false);
     }
 
     const neutralClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
@@ -40,15 +55,15 @@ export default function ({open, title, children, onCancel, cancelButtonProps, co
                     </header>
                 }
                 <div className={styles.body}>
-                    {children}
+                    <div className={styles.content}>{children}</div>
+                    {
+                        showFooter &&
+                        <footer>
+                            <Button onClick={handleMouseCancel} {...cancelButtonProps} >{cancelButtonProps?.label || 'Annuler'}</Button>
+                            <Button {...confirmButtonProps} >{confirmButtonProps?.label || 'Confirmer'}</Button>
+                        </footer>
+                    }
                 </div>
-                {
-                    showFooter &&
-                    <footer>
-                        <Button onClick={handleMouseCancel} {...cancelButtonProps} >{cancelButtonProps?.label || 'Annuler'}</Button>
-                        <Button {...confirmButtonProps} >{confirmButtonProps?.label || 'Confirmer'}</Button>
-                    </footer>
-                }
             </div>
         </div>
     )

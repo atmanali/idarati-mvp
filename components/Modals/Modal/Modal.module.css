@@ -48,24 +48,26 @@
     box-shadow: 0 5px 5px -3px var(--foreground-color-primary);
     padding: 0;
 }
-.container > footer {
-    align-self: flex-end;
-}
-
 
 .body {
     display: flex;
     flex-direction: column;
-    flex: 1;
     width: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
     padding: 3em;
 
     justify-content: center;
     gap: 1.5em;
 }
-.body > span {
+.content > span {
     color: var(--error-foreground);
     font-size: small;
+}
+.body > footer {
+    align-self: flex-end;
 }
 
 

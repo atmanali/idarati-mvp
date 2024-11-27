@@ -36,7 +36,6 @@
     left: 0;
     right: 0;
     display: flex;
-    gap: .5cm;
 }
 
 #content {
@@ -58,6 +57,21 @@
     box-shadow: 0 10px 10px 1px var(--foreground-color-primary);
 }
 
+#divider {
+    border: .5px solid var(--neutral-background);
+    margin: 1em;
+}
+
 .smallText {
     font-size: small;
+}
+.largeText {
+    font-size: x-large;
+}
+.vstack {
+    display: flex;
+    flex-direction: column;
+}
+.hstack {
+    display: flex;
 }

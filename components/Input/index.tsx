@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Input.module.css";
+import { classNames } from "@utils/namings";
 
 type Props = {
     size?: 'small' | 'medium' | 'large';
@@ -19,7 +20,7 @@ const Input = ({color='neutral', size='small', ...props}: Props) => {
     return (
         <input
             {...props}
-            className={`${styles.Input} ${styles[color]} ${styles[size]}`}
+            className={classNames([styles.Input, styles[color], styles[size]])}
             onChange={ onInputChange }
             value={value || props?.value}
         />
