@@ -3,7 +3,7 @@ import deleteUsers from "@dataServices/users/deleteUsers";
 import getUsers from "@dataServices/users/getUsers";
 import updateUsers from "@dataServices/users/updateUsers";
 import { NextApiRequest, NextApiResponse } from "next";
-import { isSuccessfulDataFetching } from "prisma/client";
+import { isSuccessfulDataFetching, query } from "prisma/client";
 
 
 export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
@@ -24,8 +24,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
             res.status(isSuccessfulDataFetching(updatedUsers) ? 200 : 500).json({ data: updatedUsers });
             break;
         case 'DELETE':
-            const deletedUsers = await deleteUsers(req.body);
-            res.status(isSuccessfulDataFetching(deletedUsers) ? 200 : 500).json({ data: deletedUsers });
+            const dissociateUsersFromRole = await query(
+                prisma => prisma.users_roles.deleteMany({where: {user_id: req.body.where.id}})
+            )
+            if (dissociateUsersFromRole) {
+                const deletedUsers = await deleteUsers(req.body);
+                res.status(isSuccessfulDataFetching(deletedUsers) ? 200 : 500).json({ data: deletedUsers });
+            }
+            else res.status(500).json({data: null});
             break;
     }
 }

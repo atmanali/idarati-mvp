@@ -17,12 +17,14 @@ type Props = ModalProps;
 export default function ({...modalProps}: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
+    // creation mutation
     const { mutateAsync } = useMutation({
         mutationFn: async (params: Prisma.usersCreateManyArgs) => await createUsers(params),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: [usersKey]});
+            console.log("L'utilisateur a été ajouté");
         },
-        onError: console.error
+        onError: () => {console.log("L'utilisateur n'a pas été ajouté")}
     })
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {

@@ -22,7 +22,7 @@ export const updateUsers = (params: Prisma.usersUpdateManyArgs) => {
 }
 export const deleteUsers = (params: Prisma.usersDeleteManyArgs) => {
     const init = initRequest('delete', { body: params });
-    return fetch(apiRoute, init);
+    return fetch(apiRoute, init).then(formatResponse);
 }
 
 export const changePassword = (username: string) => {
