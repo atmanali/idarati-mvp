@@ -3,7 +3,7 @@ import deleteUsers from "@dataServices/users/deleteUsers";
 import getUsers from "@dataServices/users/getUsers";
 import updateUsers from "@dataServices/users/updateUsers";
 import { NextApiRequest, NextApiResponse } from "next";
-import { isSuccessfulDataFetching } from "prisma/client";
+import { isSuccessfulDataFetching, query } from "prisma/client";
 
 
 export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
@@ -15,16 +15,23 @@ export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
             res.status(isSuccessfulDataFetching(gotUsers) ? 200 : 500).send({ data: gotUsers });
             break;
         case 'POST':
-            const createdUsers = await createUsers(req.body);
-            res.status(isSuccessfulDataFetching(createdUsers) ? 200 : 500).json({ data: createdUsers });
+            const isCreatedUsers = await createUsers(req.body);
+            console.log({isCreatedUsers});
+            res.status(isCreatedUsers ? 200 : 500).json({ data: isCreatedUsers ? 'CREATED' : 'ERROR' });
             break;
         case 'PATCH':
             const updatedUsers = await updateUsers(req.body);
             res.status(isSuccessfulDataFetching(updatedUsers) ? 200 : 500).json({ data: updatedUsers });
             break;
         case 'DELETE':
-            const deletedUsers = await deleteUsers(req.body);
-            res.status(isSuccessfulDataFetching(deletedUsers) ? 200 : 500).json({ data: deletedUsers });
+            const dissociateUsersFromRole = await query(
+                prisma => prisma.users_roles.deleteMany({where: {user_id: req.body.where.id}})
+            )
+            if (dissociateUsersFromRole) {
+                const deletedUsers = await deleteUsers(req.body);
+                res.status(isSuccessfulDataFetching(deletedUsers) ? 200 : 500).json({ data: deletedUsers });
+            }
+            else res.status(500).json({data: null});
             break;
     }
 }

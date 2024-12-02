@@ -1,0 +1,52 @@
+.pageContent {
+    flex: 1;
+}
+
+.filters {
+    gap: .4em;
+    margin-top: .7em;
+}
+.filters > input {
+    flex: 1;
+}
+.addUsers {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: .5em;
+}
+.addUsers > label:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.addUsers > label:active {
+    filter: contrast(0.5);
+}
+
+.usersGridContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr min-content;
+}
+
+.usersGridItem {
+    margin: .5em;
+}
+
+
+
+
+@media (min-width:700px) {
+    .usersGridContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width:900px) {
+    .usersGridContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width:1200px) {
+    .usersGridContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

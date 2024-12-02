@@ -33,7 +33,7 @@ model users {
 
 model roles {
   id String @id @db.Uuid
-  name String
+  name String @unique
   users users_roles[]
 }
 
