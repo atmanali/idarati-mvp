@@ -15,8 +15,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
             res.status(isSuccessfulDataFetching(gotUsers) ? 200 : 500).send({ data: gotUsers });
             break;
         case 'POST':
-            const createdUsers = await createUsers(req.body);
-            res.status(isSuccessfulDataFetching(createdUsers) ? 200 : 500).json({ data: createdUsers });
+            const isCreatedUsers = await createUsers(req.body);
+            res.status(isCreatedUsers ? 200 : 500).json({ data: 'CREATED' });
             break;
         case 'PATCH':
             const updatedUsers = await updateUsers(req.body);

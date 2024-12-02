@@ -1,7 +1,6 @@
 import { UsersModel } from "@models/index";
 import { Prisma } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { json } from "stream/consumers";
 import { formatResponse, initRequest } from "utils/requestsUtils";
 
 const apiRoute = "api/users";

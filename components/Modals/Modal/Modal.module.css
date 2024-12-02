@@ -49,27 +49,6 @@
     padding: 0;
 }
 
-.body {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.content {
-    display: flex;
-    flex-direction: column;
-    padding: 3em;
-
-    justify-content: center;
-    gap: 1.5em;
-}
-.content > span {
-    color: var(--error-foreground);
-    font-size: small;
-}
-.body > footer {
-    align-self: flex-end;
-}
-
 
 @media (min-width:600px) {
     .container {

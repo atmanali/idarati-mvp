@@ -5,7 +5,7 @@ import { classNames } from "@utils/namings";
 import { useUsers } from "@services/users";
 import UserCard from "@components/Cards/UserCard";
 import React, { useState } from "react";
-import AddUsersModal from "@components/Modals/AddUsersModal";
+import AddUsersFormModal from "@components/Forms/AddUsersFormModal/AddUsersFormModal";
 
 
 export default function () {
@@ -59,10 +59,10 @@ export default function () {
             </div>)
             }
         </div>
-        <AddUsersModal
+        <AddUsersFormModal
             open={isAddUsersModalOpen}
-            setOpen={setIsAddUsersModalOpen}
             onCancel={()=>setIsAddUsersModalOpen(false)}
+            title="Ajouter un utilisateur"
         />
     </div>)
 }
