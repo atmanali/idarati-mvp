@@ -7,7 +7,7 @@ const apiRoute = "api/users";
 
 export const createUsers = (params: Prisma.usersCreateManyArgs) => {
     const init = initRequest('post', { body: params });
-    return fetch(apiRoute, init);
+    return fetch(apiRoute, init).then(formatResponse<string>);
 }
 
 export const getUsers = (params?: Prisma.usersFindManyArgs) => {
@@ -32,7 +32,7 @@ export const changePassword = (username: string) => {
     return fetch(route, init).then(formatResponse<{password: string}>).then(json => json.data.password);
 }
 
-const usersKey = 'usersKey'
+export const usersKey = 'usersKey'
 export const useUsers = () => {
     const { data, isFetched, refetch } = useQuery({
         queryKey: [usersKey],

@@ -37,25 +37,12 @@ export default function () {
                     Ajouter un utilisateur
                 </Label>
             </div>
-            {isFetched && (<div className={styles.usersGridContainer}>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
-                <div className={styles.usersGridItem} >
-                    <UserCard user={users[0]} />
-                </div>
+            {isFetched && users?.length>0 && (<div className={styles.usersGridContainer}>
+                {users.map((user) => (
+                    <div className={styles.usersGridItem} >
+                        <UserCard user={user} />
+                    </div>
+                ))}
             </div>)
             }
         </div>

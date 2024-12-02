@@ -2,8 +2,11 @@ import Input from "@components/Input";
 import { ModalProps } from "@components/Modals/Modal";
 import ModalForm from "@components/Modals/ModalForm";
 import { UsersModel } from "@models/index";
-import { createUsers } from "@services/users";
+import { Prisma } from "@prisma/client";
+import { createUsers, usersKey } from "@services/users";
+import { useMutation } from "@tanstack/react-query";
 import { formData, getSubmitButton } from "@utils/formUtils";
+import queryClient from "@utils/queryClientUtils";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
 
@@ -14,14 +17,20 @@ type Props = ModalProps;
 export default function ({...modalProps}: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
+    const { mutateAsync } = useMutation({
+        mutationFn: async (params: Prisma.usersCreateManyArgs) => await createUsers(params),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: [usersKey]});
+        },
+        onError: console.error
+    })
+
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         event.stopPropagation();
 
-        console.log(formData(event.currentTarget));
         const userToCreate = formData(event.currentTarget) as UsersModel;
-        createUsers({data: {...userToCreate}});
-        console.log({userToCreate});
+        mutateAsync({data: {...userToCreate}});
     }
 
     const handleEnterPressed: React.KeyboardEventHandler<HTMLInputElement> = (event) => {

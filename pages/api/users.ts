@@ -16,7 +16,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse<any>) {
             break;
         case 'POST':
             const isCreatedUsers = await createUsers(req.body);
-            res.status(isCreatedUsers ? 200 : 500).json({ data: 'CREATED' });
+            console.log({isCreatedUsers});
+            res.status(isCreatedUsers ? 200 : 500).json({ data: isCreatedUsers ? 'CREATED' : 'ERROR' });
             break;
         case 'PATCH':
             const updatedUsers = await updateUsers(req.body);
