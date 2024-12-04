@@ -8,13 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const [username, session_token] = req.headers?.authorization.split(';');
 
     if (req.query?.username) {
-        console.log('ok');
         const isValidUsername = isSuccessfulDataFetching(await query(
             prisma => prisma.users.findUnique({
                 where: { username: req.query.username as string }
             })
         ))
-        console.log({isValidUsername});
         res.status(200).json({data: {isValidUsername}})
     }
 

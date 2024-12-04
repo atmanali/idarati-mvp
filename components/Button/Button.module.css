@@ -21,7 +21,10 @@
     cursor: not-allowed;
     filter: unset;
 }
-
+.extraSmall {
+    padding: 0;
+    padding-inline: .25em;
+}
 .small {
     padding-block: .5em;
     padding-inline: 1em;

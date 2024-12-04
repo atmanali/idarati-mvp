@@ -2,12 +2,14 @@ import styles from "./Label.module.css";
 
 
 type Props = {
-    color?: 'success' | 'error' | 'warning' | 'neutral' | 'info';
+    color?: 'success' | 'error' | 'warning' | 'neutral' | 'info' | '';
+    size?: 'small'|'medium'|'large';
 } & Omit<React.HTMLAttributes<HTMLLabelElement>, 'className'|'color'>;
 
-export default function({color, ...props}: Props) {
+export default function({color, size='medium', ...props}: Props) {
     const classNames = [
-        styles[color]
+        styles[color],
+        size + "Text"
     ]
         .filter((className) => !!className)
         .join(' ');

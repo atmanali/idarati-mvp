@@ -11,7 +11,7 @@
 }
 
 .selectedDefault {
-    background-color: var(--selected);
+    background-color: var(--selected-background);
     opacity: 0;
 
     margin-top: .25em;

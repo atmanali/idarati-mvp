@@ -9,7 +9,7 @@ import { setAuthInformation } from "@utils/authUtils";
 import { useRouter } from "next/router";
 import styles from "./LoginForm.module.css";
 import Input from "@components/Input";
-import ResetPasswordModal from "@components/Modals/ResetPasswordModal";
+import ResetPasswordModal from "@components/Modals/ResetPasswordModal/ResetPasswordModal";
 import Label from "@components/Label/Label";
 
 
@@ -96,6 +96,10 @@ export default function LoginForm() {
             <Button type='submit' variant="plain" color="info" >Login</Button>
         </footer>
       </Form>
-      <ResetPasswordModal open={isResetPasswordModalOpen} onCancel={() => setIsResetPasswordModalOpen(false)} username={username} />
+      <ResetPasswordModal
+        open={isResetPasswordModalOpen}
+        onCancel={() => setIsResetPasswordModalOpen(false)}
+        username={username}
+      />
     </>)
 }

@@ -1,9 +1,51 @@
-.Input {
+.container {
+    position: relative;
+    display: flex;
+}
+.nameLabel {
+    position: absolute;
+    bottom: 100%;
+}
+.input {
+    flex: 1;
     height: 2em;
     border-style: solid;
     border-radius: 5px;
     border-width: 1px;
     padding: 1em;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    aspect-ratio: 1;
+    transition: opacity ease-in-out 200ms;
+}
+.icon:hover {
+    cursor: pointer;
+    opacity: .7;
+}
+
+
+.optionsPanel {
+    position: absolute;
+    background: var(--background-color);
+    z-index: 1;
+    width: 100%;
+    top: 100%;
+}
+.optionsPanelOpen {
+    transition: opacity ease-in-out 300ms;
+    visibility: visible;
+    opacity: 1;
+}
+.optionsPanelClose {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .medium {

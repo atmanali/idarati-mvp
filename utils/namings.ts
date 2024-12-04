@@ -6,3 +6,5 @@ export const userName = (user: Partial<UsersModel>) => {
         ? `${user.last_name.toUpperCase()} ${capitalize(user.first_name)}`
         : undefined;
 };
+
+export const classNames = (classNamesList: string[]) => classNamesList.filter((className) => !!className).join(' ')
