@@ -59,7 +59,7 @@ model results {
   mark String
   comment String
   student_id String @db.Uuid
-  student users @relation(fields: [student_id], references: [id])
+  student users @relation(fields: [student_id], references: [id], onDelete: Cascade)
 }
 
 model logs {
@@ -70,12 +70,12 @@ model logs {
   affected_iteration_id String
   date DateTime @default(now())
   author_id String @db.Uuid
-  author users @relation(fields: [author_id], references: [id])
+  author users @relation(fields: [author_id], references: [id], onDelete: Cascade)
 }
 
 model users_roles {
   user_id String @db.Uuid
-  user users @relation(fields: [user_id], references: [id])
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   role_id String @db.Uuid
   role roles @relation(fields: [role_id], references: [id])
@@ -85,7 +85,7 @@ model users_roles {
 
 model users_appointments {
   user_id String @db.Uuid
-  user users @relation(fields: [user_id], references: [id])
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   appointment_id Int
   appointment appointments @relation(fields: [appointment_id], references: [id])
@@ -98,7 +98,7 @@ model users_appointments {
 
 model users_courses {
   user_id String @db.Uuid
-  user users @relation(fields: [user_id], references: [id])
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   course_id Int
   course courses @relation(fields: [course_id], references: [id])
