@@ -20,10 +20,7 @@ export default function ({title="Réinitialiser votre mot de passe", username, .
     }, [username])
 
     return (<>
-        <Modal {...modalProps}
-            title={title}
-            showFooter
-        >
+        <Modal {...modalProps} title={title} >
             <Input name="username" placeholder="nom d'utilisateur" value={username} disabled required />
             <Label hidden={!disabled} color="error" >Votre nom d'utilisateur n'est pas reconnu</Label>
             <Label hidden={disabled} >
