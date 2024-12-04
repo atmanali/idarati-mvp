@@ -15,6 +15,7 @@ export default function Button({variant='text', color='neutral', size='small', c
 
     return (
         <button
+            type="button"
             {...props}
             className={classNames([
                 styles.container,

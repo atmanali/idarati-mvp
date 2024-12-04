@@ -51,7 +51,7 @@ const Input = ({color='neutral', size='small', options, icon, ...props}: Props) 
             onClick={handleInputClick}
             className={classNames([styles.input, styles[color], styles[size]])}
             onChange={ onInputChange }
-            value={value}
+            value={props?.disabled ? props?.value : value}
             pattern={pattern}
         />
         {icon && (<div className={classNames([styles.icon])}>

@@ -2,7 +2,7 @@ import styles from "./Label.module.css";
 
 
 type Props = {
-    color?: 'success' | 'error' | 'warning' | 'neutral' | 'info';
+    color?: 'success' | 'error' | 'warning' | 'neutral' | 'info' | '';
     size?: 'small'|'medium'|'large';
 } & Omit<React.HTMLAttributes<HTMLLabelElement>, 'className'|'color'>;
 
