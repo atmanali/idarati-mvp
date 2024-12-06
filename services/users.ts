@@ -33,10 +33,10 @@ export const changePassword = (username: string) => {
 }
 
 export const usersKey = 'usersKey'
-export const useUsers = () => {
+export const useUsers = (params?: Prisma.usersFindManyArgs) => {
     const { data, isFetched, refetch } = useQuery({
         queryKey: [usersKey],
-        queryFn: () => getUsers()
+        queryFn: () => getUsers(params)
     })
     return {users: data, isFetched, refetch}
 }

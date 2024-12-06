@@ -8,7 +8,7 @@ type Props = {
     color?: 'success' | 'error' | 'warning' | 'neutral' | 'info';
     options?: string[];
     icon?: React.ReactNode;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'className'|'class'|'color'|'size' >;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color'|'size' >;
 
 const Input = ({color='neutral', size='small', options, icon, ...props}: Props) => {
     const [value, setValue] = useState<string>('');
@@ -19,10 +19,10 @@ const Input = ({color='neutral', size='small', options, icon, ...props}: Props) 
     const optionPaneClassNames = classNames([styles.optionsPanel, isOpenOptionsPane ? styles.optionsPanelOpen : styles.optionsPanelClose]);
 
     const onInputChange: React.ChangeEventHandler<HTMLInputElement> = ( event ) => {
-        //props?.onChange && props.onChange(event);
+        props?.onChange && props.onChange(event);
         const { value } = event.target;
         setValue(value);
-        setLocalOptions(options?.filter((option) => option.includes(value)));
+        options && setLocalOptions(options?.filter((option) => option.includes(value)));
     }
 
     const handleInputClick: React.MouseEventHandler<HTMLInputElement> = ( event ) => {
@@ -45,7 +45,7 @@ const Input = ({color='neutral', size='small', options, icon, ...props}: Props) 
 
     if (props?.required) props.placeholder = '* ' + props.placeholder;
     return (
-    <div className={classNames([styles.container])}>
+    <div className={classNames([styles.container, props?.className])}>
         <input
             {...props}
             onClick={handleInputClick}
