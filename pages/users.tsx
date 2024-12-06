@@ -1,17 +1,35 @@
 import styles from "@styles/pages/users.module.css";
 import Input from "@components/Input";
 import Label from "@components/Label/Label";
-import { classNames } from "@utils/namings";
+import { classNames, userName } from "@utils/namings";
 import { useUsers } from "@services/users";
 import UserCard from "@components/Cards/UserCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddUsersFormModal from "@components/Forms/AddUsersFormModal/AddUsersFormModal";
+import { Prisma } from "@prisma/client";
+import Select from "@components/Select/Select";
 
 
 export default function () {
-    const { users, isFetched } = useUsers();
+    const { users, isFetched } = useUsers({
+        include:{
+            roles:{
+                select: {role: true}
+            }
+        }
+    });
     const [isAddUsersModalOpen, setIsAddUsersModalOpen] = useState(false);
+    const [filteredUsers, setFilteredUsers] = useState<Partial<Prisma.usersCreateInput>[]>(users);
+    const [filters, setFilters] = useState({name: '', username: '', role: ''});
+    const [selectedRole, setSelectedRole] = useState<{label: string; value: any}>();
 
+    const onNameFilterChange: React.ChangeEventHandler<HTMLInputElement> = ( event ) => {
+        setFilters({...filters, name: event.target.value});
+    }
+    
+    const onUsernameFilterChange: React.ChangeEventHandler<HTMLInputElement> = ( event ) => {
+        setFilters({...filters, username: event.target.value});
+    }
 
     const handleAddUsers: React.MouseEventHandler<HTMLLabelElement> = ( event ) => {
         event.stopPropagation();
@@ -19,13 +37,56 @@ export default function () {
         setIsAddUsersModalOpen(true);
     }
 
+    const mergeTwoArrays = (arrayOne: any[], arrayTwo: any[]) => {
+        if (!arrayOne) return arrayTwo;
+        if (!arrayTwo) return arrayOne;
+        return [... new Set([...arrayOne, ...arrayTwo])];
+    }
+
+    const filter = () => {
+        const filteredUsersByRole = users?.filter(
+            (user) => !filters?.role || (user.roles as any)?.map((role)=>role.role.name).includes(filters?.role)
+        )
+        const filteredUsersByUsername = filteredUsersByRole?.filter(
+            (user) => !filters?.username || user?.username?.toLowerCase()?.includes(filters?.username)
+        )
+        const filteredUsersByName = filteredUsersByRole?.filter(
+            (user) => !filters?.name || userName(user)?.toLowerCase()?.includes(filters?.name)
+        );
+        return filteredUsersByName;
+    }
+
+    useEffect(() => {
+        setFilteredUsers(users);
+    }, [isFetched])
+
+    useEffect(() => {
+        setFilters({...filters, role: selectedRole?.label});
+    }, [selectedRole])
+
+    useEffect(() => {
+        setFilteredUsers(filter())
+    }, [filters])
+
     return (
     <div className={classNames(["vstack", styles.pageContent])}>
         <div className="vstack">
             <Label size="large">Filtres</Label>
             <div className={classNames(['hstack', styles.filters])}>
-                <Input placeholder="Filtrer par nom et prenom" />
-                <Input placeholder="Filtrer par rôle" />
+                <Input className={styles.filter} placeholder="Filtrer par nom et prénom" onChange={onNameFilterChange} />
+                {false &&
+                    <Input className={styles.filter} placeholder="Filtrer par nom d'utilisateur" onChange={onUsernameFilterChange} />
+                }
+                <Select
+                    className={styles.filter}
+                    defaultLabel="Roles"
+                    options={[
+                        {label:'admin', value: 'admin'},
+                        {label:'teacher', value: 'teacher'},
+                        {label:'student', value: 'student'},
+                    ]}
+                    setSelectedOption={setSelectedRole}
+                />
             </div>
 
             <div id="divider"/>
@@ -37,8 +98,8 @@ export default function () {
                     Ajouter un utilisateur
                 </Label>
             </div>
-            {isFetched && users?.length>0 && (<div className={styles.usersGridContainer}>
-                {users.map((user) => (
+            {filteredUsers?.length>0 && (<div className={styles.usersGridContainer}>
+                {filteredUsers.map((user) => (
                     <div className={styles.usersGridItem} >
                         <UserCard user={user} />
                     </div>
