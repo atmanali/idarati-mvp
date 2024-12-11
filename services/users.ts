@@ -29,7 +29,7 @@ export const changePassword = (username: string) => {
     const route = `api/auth/reset-password?username=${username}`;
     const init = initRequest('get');
 
-    return fetch(route, init).then(formatResponse<{password: string}>).then(json => json.data.password);
+    return fetch(route, init).then(formatResponse<{status: boolean}>).then(json => json.status===200);
 }
 
 export const usersKey = 'usersKey'
