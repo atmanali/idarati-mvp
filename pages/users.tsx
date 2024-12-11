@@ -57,8 +57,9 @@ export default function () {
     }
 
     useEffect(() => {
-        setFilteredUsers(users);
-    }, [isFetched])
+        isFetched && setFilteredUsers(filter());
+        isAddUsersModalOpen && setIsAddUsersModalOpen(false);
+    }, [isFetched, users])
 
     useEffect(() => {
         setFilters({...filters, role: selectedRole?.label});

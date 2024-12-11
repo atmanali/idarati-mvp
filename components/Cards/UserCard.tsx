@@ -21,7 +21,6 @@ export default function ({ user }: Props) {
         mutationFn: async (params: Prisma.usersDeleteManyArgs) => await deleteUsers(params),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: [usersKey]});
-            console.log("L'utilisateur a été supprimé");
         },
         onError: () => {console.log("L'utilisateur n'a pas été supprimé")}
     })

@@ -22,7 +22,6 @@ export default function ({...modalProps}: Props) {
         mutationFn: async (params: Prisma.usersCreateManyArgs) => await createUsers(params),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: [usersKey]});
-            console.log("L'utilisateur a été ajouté");
         },
         onError: () => {console.log("L'utilisateur n'a pas été ajouté")}
     })
