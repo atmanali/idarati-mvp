@@ -3,7 +3,6 @@ import Image from "next/image";
 import { UsersModel } from "@models/index";
 import { userName } from "@utils/namings";
 import Label from "@components/Label/Label";
-import Button from "@components/Button";
 import { useMutation } from "@tanstack/react-query";
 import { Prisma } from "@prisma/client";
 import { usersKey } from "@services/users";
@@ -39,7 +38,9 @@ export default function ({ user }: Props) {
             <Label color="" size="small">{user.username}</Label>
             <div className={styles.actions}>
                 <IconButton iconUrl="/calendar_add_on.svg" size="small" color="info" />
-                <IconButton iconUrl="/calendar_add_on.svg" size="small" color="error" />
+                <IconButton iconUrl="/delete_forever.svg" size="small" color="error"
+                    onClick={handleDeleteUserClick}
+                />
             </div>
         </div>
     </div>)

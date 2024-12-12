@@ -4,6 +4,7 @@
     border-width: 0;
     aspect-ratio: 1;
     align-items: center;
+    cursor: pointer;
 }
 
 .error:hover {
