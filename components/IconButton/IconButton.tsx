@@ -7,12 +7,12 @@ type Props = {
     iconUrl: string;
     size?: 'small' | 'medium' | 'large';
     color?: 'success' | 'error' | 'warning' | 'neutral' | 'info' | '';
-} & React.HTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const sizes = {small:24, medium: 28, large: 32};
 export default function ( {iconUrl, size="small", color="neutral", ...buttonProps} : Props ) {
     return (<>
-        <button className={classNames([styles.container, styles[color]])} {...buttonProps}>
+        <button className={classNames([styles.container, !buttonProps?.disabled && styles[color]])} {...buttonProps}>
             <Image className={classNames([styles.icon])} src={iconUrl} alt="icon button" width={sizes[size]} height={sizes[size]}/>
         </button>
     </>)

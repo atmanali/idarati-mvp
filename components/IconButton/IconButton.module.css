@@ -6,6 +6,9 @@
     align-items: center;
     cursor: pointer;
 }
+.container:disabled {
+    cursor: not-allowed;
+}
 
 .error:hover {
     background-color: var(--error-background);

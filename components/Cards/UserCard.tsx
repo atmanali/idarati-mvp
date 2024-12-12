@@ -10,12 +10,14 @@ import queryClient from "@utils/queryClientUtils";
 import { deleteUsers } from "@services/users";
 import React from "react";
 import IconButton from "@components/IconButton/IconButton";
+import { getCurrentUser } from "@utils/authUtils";
 
 type Props = {
     user: Partial<UsersModel>;
 }
 
 export default function ({ user }: Props) {
+    const currentUser = getCurrentUser();
 
     const { mutateAsync } = useMutation({
         mutationFn: async (params: Prisma.usersDeleteManyArgs) => await deleteUsers(params),
@@ -40,6 +42,7 @@ export default function ({ user }: Props) {
                 <IconButton iconUrl="/calendar_add_on.svg" size="small" color="info" />
                 <IconButton iconUrl="/delete_forever.svg" size="small" color="error"
                     onClick={handleDeleteUserClick}
+                    disabled={currentUser?.username === user?.username}
                 />
             </div>
         </div>
