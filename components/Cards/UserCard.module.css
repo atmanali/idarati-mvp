@@ -17,6 +17,10 @@
 }
 .actions {
     position: absolute;
+    display: flex;
     bottom: 0;
-    right: 2px;
+    right: 0;
+    margin: .2em;
+    gap: 0.2em;
+    align-items: center;
 }

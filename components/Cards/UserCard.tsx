@@ -3,13 +3,13 @@ import Image from "next/image";
 import { UsersModel } from "@models/index";
 import { userName } from "@utils/namings";
 import Label from "@components/Label/Label";
-import Button from "@components/Button";
 import { useMutation } from "@tanstack/react-query";
 import { Prisma } from "@prisma/client";
 import { usersKey } from "@services/users";
 import queryClient from "@utils/queryClientUtils";
 import { deleteUsers } from "@services/users";
 import React from "react";
+import IconButton from "@components/IconButton/IconButton";
 
 type Props = {
     user: Partial<UsersModel>;
@@ -32,17 +32,15 @@ export default function ({ user }: Props) {
     }
 
     return (<div className={styles.card}>
-        <Image src={'/default-avatar.svg'} alt={`avatar de ${userName(user)}`} height={64} width={64} />
+        <Image src={'/account_circle.svg'} alt={`avatar de ${userName(user)}`} height={64} width={64} />
         <div className={styles.information}>
-            <Label color="neutral">{userName(user)}</Label>
-            <Label color="neutral" size="small">{user.username}</Label>
+            <Label color="">{userName(user)}</Label>
+            <Label color="" size="small">{user.username}</Label>
             <div className={styles.actions}>
-                <Button color="info" variant="plain" size="extraSmall" >
-                    <Image src={"/calendar-add.svg"} alt={"Proposer un rendez-vous"} height={24} width={24} />
-                </Button>
-                <Button color="error" variant="plain" size="extraSmall" onClick={handleDeleteUserClick} >
-                    <Image src={"/bin.svg"} alt={`Supprimer l'utilisateur ${userName(user)}`} height={24} width={24} />
-                </Button>
+                <IconButton iconUrl="/calendar_add_on.svg" size="small" color="info" />
+                <IconButton iconUrl="/delete_forever.svg" size="small" color="error"
+                    onClick={handleDeleteUserClick}
+                />
             </div>
         </div>
     </div>)
