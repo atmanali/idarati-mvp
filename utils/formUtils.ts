@@ -1,9 +1,9 @@
-export const formData = (form: HTMLFormElement) => {
+export function formData<T=any> (form: HTMLFormElement) {
     const inputs = form.getElementsByTagName('input');
     const output = {};
     Array(inputs.length).fill(0).map((element, index) => output[inputs[index].name] = inputs[index].value);
 
-    return output
+    return output as T
 }
 
 export const getSubmitButton = (form: HTMLFormElement) => {

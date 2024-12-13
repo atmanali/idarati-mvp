@@ -14,7 +14,7 @@
     cursor: pointer;
     gap: .5em;
 }
-.children::after {
+.arrow::after {
     position: absolute;
     right: 0;
     content: '';
@@ -32,15 +32,18 @@
     top: 100%;
     right: 0;
     border: 1px solid var(--neutral-foreground);
-    padding: .2em;
-    z-index: 1;
+    padding: .5em;
+    z-index: 999;
     background: var(--background-color);
     display: flex;
     flex-direction: column;
     gap: .2em;
     min-width: 50%;
+    max-height: 7em;
     text-wrap: nowrap;
     border-radius: 5px;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 .itemsOpen {
     transition: opacity ease-in-out 300ms;
@@ -62,4 +65,8 @@
 }
 .item > * {
     cursor: pointer;
+}
+
+.hasSecondaryLabel {
+    justify-content: space-between;
 }
