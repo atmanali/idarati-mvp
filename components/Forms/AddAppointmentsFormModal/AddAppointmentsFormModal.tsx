@@ -10,33 +10,37 @@ import { classNames, userName } from "@utils/namings";
 import UserCard from "@components/Cards/UserCard";
 import IconButton from "@components/IconButton/IconButton";
 import Dropdown from "@components/Dropdown/Dropdown";
+import { useMutation } from "@tanstack/react-query";
 
 type Props = {
     user?: Partial<UsersModel>;
     filteredUsers?: Partial<UsersModel>[];
 } & ModalProps
 
-/*
-    name: string;
-    type: string;
-    start_date: Date | string;
-    end_date: Date | string;
-    users?:
-*/
-
 export default function( {open, onCancel, user, filteredUsers}: Props ) {
     const [selectedUsers, setSelectedUsers] = useState<Partial<UsersModel>[]>();
+
+    const { mutateAsync } = useMutation({
+        mutationFn:
+            async ({appointment, usersIds}: {appointment: AppointmentsModel, usersIds: string[]}) =>
+                await createAppointments(appointment, usersIds),
+        onSuccess: async (data) => {
+            console.log('appointment created')
+        },
+        onError: async (data) => {
+            console.log('appointment not created')
+        },
+    })
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         event.stopPropagation();
         const data = formData<AppointmentsModel>(event.currentTarget);
-        console.log(data)
-        const createdAppointment = await createAppointments(
-            {...data, start_date: new Date(data.start_date), end_date: new Date(data.end_date)},
-            selectedUsers?.map((user)=>user?.id)
-        );
-        console.log({createAppointments});
+        await mutateAsync({
+            appointment: {...data, start_date: new Date(data.start_date), end_date: new Date(data.end_date)},
+            usersIds: selectedUsers?.map((selectedUser) => selectedUser?.id),
+        });
+        onCancel && onCancel(event);
     }
 
 

@@ -18,14 +18,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse){
         case 'POST':
             const {appointment, usersIds} = req.body;
             const createdAppointment = await createAppointment(appointment);
-            console.log({createdAppointments: createdAppointment});
-            const relatedUsers = await createUsersAppointments([
-                {
-                    user_id: usersIds[0],
-                    appointment_id: createdAppointment?.id
-                }
-            ]);
-            res.status(isSuccessfulDataFetching(createdAppointment) ? 200 : 500).json({ data: createdAppointment });
+            const relatedUsers = usersIds?.length ? (
+                await createUsersAppointments(
+                    usersIds.map( userId => ({user_id: userId, appointment_id: createdAppointment?.id}) )
+                )
+            ) : null;
+            res.status(isSuccessfulDataFetching(relatedUsers) ? 200 : 500).json({ data: createdAppointment });
             break;
         case 'PATCH':
             const updatedAppointments = await updateAppointments(req.body);
