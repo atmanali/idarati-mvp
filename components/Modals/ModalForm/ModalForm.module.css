@@ -7,10 +7,9 @@
 .content {
     display: flex;
     flex-direction: column;
-    padding: 3em;
-
+    padding-inline: 3em;
     justify-content: center;
-    gap: 1.5em;
+    gap: .5em;
 }
 .content > span {
     color: var(--error-foreground);

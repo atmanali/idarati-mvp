@@ -8,16 +8,15 @@ import React, { useEffect, useState } from "react";
 import AddUsersFormModal from "@components/Forms/AddUsersFormModal/AddUsersFormModal";
 import { Prisma } from "@prisma/client";
 import Select from "@components/Select/Select";
+import { UsersModel } from "@models/index";
+import AddAppointmentsFormModal from "@components/Forms/AddAppointmentsFormModal/AddAppointmentsFormModal";
 
 
 export default function () {
     const { users, isFetched } = useUsers({
-        include:{
-            roles:{
-                select: {role: true}
-            }
-        }
+        include:{ roles:{ select: {role: true} } }
     });
+    const [selectedUserForAppointment, setSelectedUserForAppointment] = useState<Partial<UsersModel>>();
     const [isAddUsersModalOpen, setIsAddUsersModalOpen] = useState(false);
     const [filteredUsers, setFilteredUsers] = useState<Partial<Prisma.usersCreateInput>[]>(users);
     const [filters, setFilters] = useState({name: '', username: '', role: ''});
@@ -102,7 +101,7 @@ export default function () {
             {filteredUsers?.length>0 && (<div className={styles.usersGridContainer}>
                 {filteredUsers.map((user) => (
                     <div className={styles.usersGridItem} >
-                        <UserCard user={user} />
+                        <UserCard user={user} setSelectedUserForAppointment={setSelectedUserForAppointment} />
                     </div>
                 ))}
             </div>)
@@ -113,5 +112,13 @@ export default function () {
             onCancel={()=>setIsAddUsersModalOpen(false)}
             title="Ajouter un utilisateur"
         />
+        {selectedUserForAppointment&&
+            <AddAppointmentsFormModal
+                open={Boolean(selectedUserForAppointment)}
+                onCancel={()=>setSelectedUserForAppointment(null)}
+                user={selectedUserForAppointment}
+                filteredUsers={filteredUsers?.filter((user => user?.id != selectedUserForAppointment?.id))}
+            />
+        }
     </div>)
 }

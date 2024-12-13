@@ -1,7 +1,8 @@
-import createAppointments from "@dataServices/appointments/createAppointments";
+import createAppointment from "@dataServices/appointments/createAppointments";
 import deleteAppointments from "@dataServices/appointments/deleteAppointments";
 import getAppointments from "@dataServices/appointments/getAppointments";
 import updateAppointments from "@dataServices/appointments/updateAppointments";
+import createUsersAppointments from "@dataServices/usersAppointments/createUsersAppointments";
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { isSuccessfulDataFetching } from "prisma/client";
@@ -15,8 +16,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse){
             res.status(isSuccessfulDataFetching(gotAppointments) ? 200 : 500).send({ data: gotAppointments });
             break;
         case 'POST':
-            const createdAppointments = await createAppointments(req.body);
-            res.status(isSuccessfulDataFetching(createdAppointments) ? 200 : 500).json({ data: createdAppointments });
+            const {appointment, usersIds} = req.body;
+            const createdAppointment = await createAppointment(appointment);
+            console.log({createdAppointments: createdAppointment});
+            const relatedUsers = await createUsersAppointments([
+                {
+                    user_id: usersIds[0],
+                    appointment_id: createdAppointment?.id
+                }
+            ]);
+            res.status(isSuccessfulDataFetching(createdAppointment) ? 200 : 500).json({ data: createdAppointment });
             break;
         case 'PATCH':
             const updatedAppointments = await updateAppointments(req.body);
