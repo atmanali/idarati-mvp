@@ -19,9 +19,6 @@
     visibility: hidden;
     opacity: 0;
 }
-.overlay * {
-    transition: unset;
-}
 .container {
     display: flex;
     flex-direction: column;
