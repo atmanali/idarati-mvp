@@ -9,6 +9,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@utils/queryClientUtils";
 import AuthenticationProvider from "@components/AuthenticationProvider";
 import Sidebar from '@components/Sidebar';
+import LoginForm2 from '@components/Forms/LoginForm/LoginForm2';
 
 
 const tabs = [
@@ -22,8 +23,9 @@ export default function App({Component, pageProps}: AppProps) {
     return(<>
         <QueryClientProvider client={queryClient}>
             <AuthenticationProvider setIsConnected={setIsConnected} >
-                {isConnected && <TopBar tabs={tabs} />}
-                <main id="main">
+                {isConnected ? (<>
+                    <TopBar tabs={tabs} />
+                    <main id="main">
                     {isConnected &&
                         <aside id="sidebar">
                             <Sidebar />
@@ -33,6 +35,9 @@ export default function App({Component, pageProps}: AppProps) {
                         <Component {...pageProps}/>
                     </div>
                 </main>
+                </>)
+                : (<LoginForm2 />)
+                }
             </AuthenticationProvider>
         </QueryClientProvider>
     </>)

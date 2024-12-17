@@ -6,6 +6,7 @@ html {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: var(--font-normal-size);
     color: var(--foreground-color-primary);
+    background-color: var(--neutral-background);
 }
 h1 {
     color: var(--title-foreground);
