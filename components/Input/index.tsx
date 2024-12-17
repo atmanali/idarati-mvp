@@ -4,13 +4,14 @@ import { classNames } from "@utils/namings";
 import Chip from "@components/Chip";
 
 type Props = {
+    soft?: boolean;
     size?: 'small' | 'medium' | 'large';
     color?: 'success' | 'error' | 'warning' | 'neutral' | 'info';
     options?: string[];
     icon?: React.ReactNode;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color'|'size' >;
 
-const Input = ({color='neutral', size='small', options, icon, ...props}: Props) => {
+const Input = ({ soft=false, color='neutral', size='small', options, icon, ...props }: Props) => {
     const [value, setValue] = useState<string>('');
     const [localOptions, setLocalOptions] = useState<string[]>(options);
     const [isOpenOptionsPane, setIsOpenOptionsPane] = useState(false);
@@ -49,7 +50,7 @@ const Input = ({color='neutral', size='small', options, icon, ...props}: Props) 
         <input
             {...props}
             onClick={handleInputClick}
-            className={classNames([styles.input, styles[color], styles[size]])}
+            className={classNames([styles.input, styles[color], styles[size], soft&&styles.soft])}
             onChange={ onInputChange }
             value={props?.disabled ? props?.value : value}
             pattern={pattern}
