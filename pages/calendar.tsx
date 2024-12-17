@@ -21,44 +21,38 @@ const lengthOfOneWeek = 1000*60*60*24*7;
 export default function () {
     const { appointments, isFetched } = useAppointments();
     const [today, setToday] = useState<Date>(new Date());
+    const [firstDayOfWeek, setFirstDayOfWeek] = useState<Date>();
     
     useEffect(() => {
         isFetched && console.log(appointments);
-        isFetched && convertDateOfAppointments(appointments);
     }, [isFetched])
 
-    const convertDateOfAppointments = (aptmnts: AppointmentsModel[]) => {
-        if (!aptmnts?.length) return;
-        const startDates = aptmnts.map(aptmnt => new Date(aptmnt.start_date));
-        const endDates = aptmnts.map(aptmnt => new Date(aptmnt.end_date));
-        const startDatesClasseNames = startDates.map(dateToCalendarClassName)
-        const endDatesClasseNames = endDates.map(dateToCalendarClassName)
+    useEffect(() => {
+        setFirstDayOfWeek(today);
+    }, [today])
 
-        console.log({startDatesClasseNames, endDatesClasseNames});
-    }
-
-    const firstDayOfWeek = () => today?.getDate() - today?.getDay() + 1;
-    const firstDayOfWeekWithMonth = () => `${firstDayOfWeek()} ${months[today?.getMonth()]}`;
+    const calculateFirstDayOfWeek = () => today?.getDate() - today?.getDay() + 1;
+    const firstDayOfWeekWithMonth = () => `${calculateFirstDayOfWeek()} ${months[today?.getMonth()]}`;
     const lenghtOfActualMonth = () => months
 
     return (<>
         <div className={classNames([styles.calendarContainer, "vstack"])}>
             <header>
                 <div>
-                    <IconButton iconUrl="/chevron_left.svg" onClick={() => setToday(new Date(today.getTime() - lengthOfOneWeek))} />
-                    <IconButton iconUrl="/chevron_right.svg" onClick={() => setToday(new Date(today.getTime() + lengthOfOneWeek))} />
+                    <IconButton size="extraSmall" iconUrl="/chevron_left.svg" onClick={() => setToday(new Date(today.getTime() - lengthOfOneWeek))} />
+                    <IconButton size="extraSmall" iconUrl="/chevron_right.svg" onClick={() => setToday(new Date(today.getTime() + lengthOfOneWeek))} />
                 </div>
-                Semaine du {firstDayOfWeekWithMonth()}
+                <h4>Semaine du {firstDayOfWeekWithMonth()}</h4>
                 <Label className={styles.resetToday} onClick={() => setToday(new Date())}>Aujourd'hui</Label>
             </header>
             <div className={classNames([styles.calendarGrid])}>
-                <CalendarItem className={styles.mon}>Lundi {firstDayOfWeek()}</CalendarItem>
-                <CalendarItem className={styles.tue}>Mardi {firstDayOfWeek() + 1}</CalendarItem>
-                <CalendarItem className={styles.wed}>Mercredi {firstDayOfWeek() + 2}</CalendarItem>
-                <CalendarItem className={styles.thu}>Jeudi {firstDayOfWeek() + 3}</CalendarItem>
-                <CalendarItem className={styles.fri}>Vendredi {firstDayOfWeek() + 4}</CalendarItem>
-                <CalendarItem className={styles.sat}>Samedi {firstDayOfWeek() + 5}</CalendarItem>
-                <CalendarItem className={styles.sun}>Dimanche {firstDayOfWeek() + 6}</CalendarItem>
+                <CalendarItem className={styles.mon}>Lundi {calculateFirstDayOfWeek()}</CalendarItem>
+                <CalendarItem className={styles.tue}>Mardi {calculateFirstDayOfWeek() + 1}</CalendarItem>
+                <CalendarItem className={styles.wed}>Mercredi {calculateFirstDayOfWeek() + 2}</CalendarItem>
+                <CalendarItem className={styles.thu}>Jeudi {calculateFirstDayOfWeek() + 3}</CalendarItem>
+                <CalendarItem className={styles.fri}>Vendredi {calculateFirstDayOfWeek() + 4}</CalendarItem>
+                <CalendarItem className={styles.sat}>Samedi {calculateFirstDayOfWeek() + 5}</CalendarItem>
+                <CalendarItem className={styles.sun}>Dimanche {calculateFirstDayOfWeek() + 6}</CalendarItem>
                 <CalendarItem className={styles.eight}>8h-9h</CalendarItem>
                 <CalendarItem className={styles.nine}>9h-10h</CalendarItem>
                 <CalendarItem className={styles.ten}>10h-11h</CalendarItem>
