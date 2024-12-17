@@ -10,14 +10,17 @@
     align-items: center;
     border-radius: 10px;
     padding: .5em;
+    text-align: center;
 }
-.calendarContainer > header > div {
+.calendarContainer > header > div[class="calendar-navigation-buttons"] {
     display: inline-block;
 }
-.calendarContainer > header > h4 {
+.calendarContainer > header > div[class="calendar-title"] {
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bolder;
 }
 .resetToday {
     border-radius: 10px;
@@ -34,9 +37,16 @@
     border-radius: 10px;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
     .calendarContainer > header {
         font-size: small;
+        font-weight: bold;
+    }
+}
+@media (max-width: 450px) {
+    .calendarContainer > header {
+        font-size: x-small;
+        font-weight: bold;
     }
 }
 
