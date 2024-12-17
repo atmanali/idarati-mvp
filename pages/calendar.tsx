@@ -1,6 +1,6 @@
 import styles from "@styles/pages/calendar.module.css";
 import { useAppointments } from "@services/appointments";
-import { arrayOfCalendarClassNames, months, monthsLengths } from "@utils/calendarUtils";
+import { arrayOfCalendarClassNames, days, daysInFrench, isToday, months, monthsLengths } from "@utils/calendarUtils";
 import CalendarItem from "@components/CalendarItem/CalendarItem";
 import { useEffect, useState } from "react";
 import IconButton from "@components/IconButton/IconButton";
@@ -23,6 +23,7 @@ export default function () {
     const { appointments, isFetched } = useAppointments();
     const [today, setToday] = useState<Date>(new Date());
     const [firstDayOfWeek, setFirstDayOfWeek] = useState<Date>();
+    const [daysOfWeek, setDaysOfWeek] = useState<Date[]>();
     
     useEffect(() => {
         isFetched && console.log({appointments, firstDayOfWeek});
@@ -33,13 +34,23 @@ export default function () {
             today.getTime() - (today.getDay()-1)*lengthOfOneDay
         ));
     }, [today])
+    useEffect(() => {
+        setDaysOfWeek(
+            Array(7).fill(0).map((elem, index) =>
+                new Date(
+                    firstDayOfWeek?.getTime() + index*lengthOfOneDay
+                )
+        ))
+    }, [firstDayOfWeek])
 
-    const calculateDayOfWeek = (day: number = 0) =>{
-        const output = (firstDayOfWeek?.getDate()+day)%monthsLengths(firstDayOfWeek?.getFullYear())[firstDayOfWeek?.getMonth()];
-        return (!!day && output<6) ? output+1 : output;
+    const calculateDayOfMonth = (daysOffset: number = 0) =>{
+        const dayNumber = 
+            (firstDayOfWeek?.getDate()+daysOffset)%monthsLengths(firstDayOfWeek?.getFullYear())[firstDayOfWeek?.getMonth()];
+        return (!!daysOffset && dayNumber<6) ? dayNumber+1 : dayNumber;
     }
     
-    const firstDayOfWeekWithMonth = () => `${calculateDayOfWeek()} ${months[today?.getMonth()]}`;
+    
+    const firstDayOfWeekWithMonth = () => `${calculateDayOfMonth()} ${months[firstDayOfWeek?.getMonth()]}`;
 
     return (<>
         <div className={classNames([styles.calendarContainer, "vstack"])}>
@@ -55,13 +66,16 @@ export default function () {
                 <Label className={styles.resetToday} onClick={() => setToday(new Date())}>Aujourd'hui</Label>
             </header>
             <div className={classNames([styles.calendarGrid])}>
-                <CalendarItem className={styles.mon}>Lundi {calculateDayOfWeek()}</CalendarItem>
-                <CalendarItem className={styles.tue}>Mardi {calculateDayOfWeek(1)}</CalendarItem>
-                <CalendarItem className={styles.wed}>Mercredi {calculateDayOfWeek(2)}</CalendarItem>
-                <CalendarItem className={styles.thu}>Jeudi {calculateDayOfWeek(3)}</CalendarItem>
-                <CalendarItem className={styles.fri}>Vendredi {calculateDayOfWeek(4)}</CalendarItem>
-                <CalendarItem className={styles.sat}>Samedi {calculateDayOfWeek(5)}</CalendarItem>
-                <CalendarItem className={styles.sun}>Dimanche {calculateDayOfWeek(6)}</CalendarItem>
+                {daysOfWeek?.map(
+                    (dayOfWeek, index) =>
+                        (<CalendarItem key={index} className={classNames([
+                            styles[days[dayOfWeek?.getDay()]],
+                            isToday(dayOfWeek) && styles.isToday,
+                        ])}>
+                            {daysInFrench[dayOfWeek?.getDay()]} {' '}
+                            {calculateDayOfMonth((dayOfWeek?.getDay()-1)%7)}
+                        </CalendarItem>)
+                )}
                 <CalendarItem className={styles.eight}>8h-9h</CalendarItem>
                 <CalendarItem className={styles.nine}>9h-10h</CalendarItem>
                 <CalendarItem className={styles.ten}>10h-11h</CalendarItem>
