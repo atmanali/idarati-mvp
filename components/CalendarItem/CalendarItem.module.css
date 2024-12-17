@@ -1,0 +1,7 @@
+.calendarItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 5px -3px var(--foreground-color-primary);
+    margin: .05em;
+}
