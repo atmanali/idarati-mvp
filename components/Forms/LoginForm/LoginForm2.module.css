@@ -1,0 +1,20 @@
+.form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    margin: 2em;
+    padding: 1em;
+
+    box-shadow: 0 10px 10px 0 var(--neutral-foreground);
+    border-radius: 10px;
+}
+
+.form > header {
+    position: absolute;
+    bottom: 100%;
+    width: calc(100% - 2em);
+    display: flex;
+    justify-content: center;
+}
