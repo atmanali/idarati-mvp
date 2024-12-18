@@ -1,18 +1,21 @@
 import styles from "@styles/pages/calendar.module.css";
 import { useAppointments } from "@services/appointments";
-import { calendarClassNames, days, daysInFrench, filteredAppointmentsByCalendarClassname, isToday, lengthOfOneDay, lengthOfOneWeek, months, monthsLengths } from "@utils/calendarUtils";
+import { calculateDateFromCalendarClassnameAndFirstDayOfWeek, calendarClassNames, days, daysInFrench, filteredAppointmentsByCalendarClassname, isToday, lengthOfOneDay, lengthOfOneWeek, months, monthsLengths } from "@utils/calendarUtils";
 import CalendarItem from "@components/CalendarItem/CalendarItem";
 import { useEffect, useState } from "react";
 import IconButton from "@components/IconButton/IconButton";
 import Label from "@components/Label/Label";
 import { classNames } from "@utils/namings";
 import { getCurrentUser } from "@utils/authUtils";
+import AddAppointmentsFormModal from "@components/Forms/AddAppointmentsFormModal/AddAppointmentsFormModal";
 
 
 export default function () {
     const [today, setToday] = useState<Date>(new Date());
     const [firstDayOfWeek, setFirstDayOfWeek] = useState<Date>();
     const [daysOfWeek, setDaysOfWeek] = useState<Date[]>();
+    const [isOpenAddAppointmentsFormModal, setIsOpenAddAppointmentsFormModal] = useState(false);
+    const [appointmentStartDate, setAppointmentStartDate] = useState<Date>();
 
     const currentUser = getCurrentUser();
     const { appointments, refetch } = useAppointments({
@@ -52,6 +55,16 @@ export default function () {
     
     
     const firstDayOfWeekWithMonth = () => `${calculateDayOfMonth()} ${months[firstDayOfWeek?.getMonth()]}`;
+
+    function addAppointmentForThisDate(calendarClassName: string) {
+        setAppointmentStartDate(
+            calculateDateFromCalendarClassnameAndFirstDayOfWeek(
+                calendarClassName,
+                firstDayOfWeek
+            )
+        );
+        setIsOpenAddAppointmentsFormModal(true);
+    }
 
     return (<>
         <div className={classNames([styles.calendarContainer, "vstack"])}>
@@ -100,11 +113,21 @@ export default function () {
                             className={styles[calendarClassName]}
                             anchor={calendarClassName}
                             appointments={filteredAppointmentsByCalendarClassname(appointments, calendarClassName)}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                addAppointmentForThisDate(calendarClassName);
+                            }}
                         />
                     )
                 )}
             </div>
             <footer className="hstack">calendar footer</footer>
         </div>
+        <AddAppointmentsFormModal
+            open={isOpenAddAppointmentsFormModal}
+            onCancel={() => setIsOpenAddAppointmentsFormModal(false)}
+            start_date={appointmentStartDate}
+        />
     </>)
 }

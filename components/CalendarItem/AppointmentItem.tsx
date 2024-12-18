@@ -12,7 +12,9 @@ type Props = {
 export default function ({ appointment, anchor }: Props) {
     return (<>
         {appointment.id &&
-            <div className={classNames([styles.calendarAppointmentItem])}>
+            <div className={classNames([styles.calendarAppointmentItem])}
+                onClick={(event) => event.stopPropagation()}
+            >
                 <div className={styles.divider} />
                 <PopoverButton popoverTargetId={`popover-${anchor}-${appointment.id}`}
                     style={{

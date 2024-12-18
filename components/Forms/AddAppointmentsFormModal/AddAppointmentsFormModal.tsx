@@ -15,10 +15,12 @@ import { useMutation } from "@tanstack/react-query";
 type Props = {
     user?: Partial<UsersModel>;
     filteredUsers?: Partial<UsersModel>[];
+    start_date?: Date;
 } & ModalProps
 
-export default function( {open, onCancel, user, filteredUsers}: Props ) {
+export default function( {open, onCancel, user, start_date, filteredUsers}: Props ) {
     const [selectedUsers, setSelectedUsers] = useState<Partial<UsersModel>[]>();
+    const [startDate, setStartDate] = useState<string>();
 
     const { mutateAsync } = useMutation({
         mutationFn:
@@ -43,10 +45,19 @@ export default function( {open, onCancel, user, filteredUsers}: Props ) {
         onCancel && onCancel(event);
     }
 
+    const formatDate = (date: Date) => {
+        let [dateString, timeString] = [date?.toLocaleDateString(), date?.toLocaleTimeString()];
+        dateString = dateString?.split('/')?.reverse()?.join('-');
+        timeString = timeString?.slice(0, timeString?.length-3);
+        return dateString+'T'+timeString;
+    }
 
     useEffect(() => {
         !selectedUsers && user && setSelectedUsers([user])
     }, [user])
+    useEffect(() => {
+        start_date && setStartDate(formatDate(start_date));
+    }, [start_date])
 
     const remove = (userId: string) => setSelectedUsers(selectedUsers?.filter((user) => user?.id != userId))
 
@@ -54,7 +65,7 @@ export default function( {open, onCancel, user, filteredUsers}: Props ) {
         <ModalForm title="Ajouter un rendez-vous" open={open} onSubmit={onSubmit} onCancel={onCancel} >
             <Input name="name" placeholder="Nom du rendez-vous" required />
             <Input name="type" placeholder="Type du rendez-vous" required />
-            <Input name="start_date" placeholder="Début du rendez-vous" type="datetime-local" required />
+            <Input name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
             <Input name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" required />
             <div className={classNames([styles.listOfUsers])}>
                 <Dropdown hideArrow items={

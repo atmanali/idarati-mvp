@@ -11,7 +11,7 @@ type Props = {
 
 export default function ({ appointments, anchor, children, ...props }: Props) {
 
-    return (<div className={classNames([props?.className, styles.calendarItem])}>
+    return (<div {...props} className={classNames([props?.className, styles.calendarItem])}>
         {children ||
             (appointments?.length
                 ? (

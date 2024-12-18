@@ -23,9 +23,12 @@ export const isToday = (day: Date) => {
     return day?.toDateString() == today?.toDateString()
 }
 
+const getClassNameDay = (calendarClassName: string) => calendarClassName?.slice(calendarClassName?.length-3);
+const getClassNameHour = (calendarClassName: string) => calendarClassName?.slice(0, calendarClassName?.length-3);
+
 export const filteredAppointmentsByCalendarClassname = (appointments: AppointmentsModel[], calendarClassName: string) => {
-    const classNameHour = calendarClassName?.slice(0, calendarClassName?.length-3);
-    const classNameDay = calendarClassName?.slice(calendarClassName?.length-3);
+    const classNameDay = getClassNameDay(calendarClassName);
+    const classNameHour = getClassNameHour(calendarClassName);
     return appointments?.length && appointments.filter((appointment) => {
         const startDate = new Date(appointment.start_date);
         const endDate = new Date(appointment.end_date);
@@ -44,4 +47,16 @@ export const filteredAppointmentsByCalendarClassname = (appointments: Appointmen
             )
         )
     });
+}
+
+export const calculateDateFromCalendarClassnameAndFirstDayOfWeek = (calendarClassName: string, firstDayOfWeek: Date) => {
+    const classNameDay = getClassNameDay(calendarClassName);
+    const classNameHour = getClassNameHour(calendarClassName);
+    const [ day ] = Object.keys(days).filter((key) => days[key]===classNameDay).map(parseInt);
+    const [ hour ] = Object.keys(hours).filter((key) => hours[key]===classNameHour).map(parseInt);
+    const date = new Date(
+        firstDayOfWeek?.getTime() + (day - 1)*lengthOfOneDay
+    )
+    date?.setHours(hour);
+    return date;
 }
