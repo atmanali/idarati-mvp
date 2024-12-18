@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { formatResponse, initRequest } from "@utils/requestsUtils";
 
 
-const baseRoute = 'api/appointments';
+const baseRoute = '/api/appointments';
 
 export const createAppointments = (appointment: AppointmentsModel, usersIds: string[]) => {
     const init = initRequest('post', {body:{appointment, usersIds}});
@@ -20,10 +20,10 @@ export const getAppointments = (params?: Prisma.appointmentsFindManyArgs) => {
 const appointmentsKey = 'appointmentsKey';
 
 export const useAppointments = (params?: Prisma.appointmentsFindManyArgs) => {
-    const {data, isFetched, isError} = useQuery({
+    const {data, isFetched, refetch} = useQuery({
         queryKey: [ appointmentsKey ],
         queryFn: async () => getAppointments(params),
     })
 
-    return { appointments: data, isFetched };
+    return { appointments: data, isFetched, refetch };
 }

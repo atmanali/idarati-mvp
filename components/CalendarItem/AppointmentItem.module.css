@@ -1,0 +1,24 @@
+.calendarAppointmentItem {
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    background-color: tan; /* change color with appointment type */
+    margin-bottom: .1em;
+}
+
+.divider {
+    border: 1px solid var(--info-background); /* change color with appointment type */
+    margin: .07em .05em;
+    /*cursor: move;*/
+}
+.calendarAppointmentItem > div[id^="popover"] {
+    left: anchor(left);
+    top: anchor(bottom);
+    margin: 0;
+}
+
+.calendarAppointmentItem > div[id^="popover"]::backdrop {
+    background-color: var(--neutral-background);
+    opacity: .2;
+}

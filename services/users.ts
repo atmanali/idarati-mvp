@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { formatResponse, initRequest } from "utils/requestsUtils";
 
-const apiRoute = "api/users";
+const apiRoute = "/api/users";
 
 export const createUsers = (params: Prisma.usersCreateManyArgs) => {
     const init = initRequest('post', { body: params });

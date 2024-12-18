@@ -2,7 +2,7 @@ import { AppointmentsModel } from "@models/index";
 
 const hours = { '8': 'eight', '9': 'nine', '10': 'ten', '11': 'eleven', '12': 'twelve', '13': 'thirteen', '14': 'fourteen', '15': 'fifteen', '16': 'sixteen' };
 export const days = { '1': 'mon', '2': 'tue', '3': 'wed', '4': 'thu', '5': 'fri', '6': 'sat', '0': 'sun' };
-export const daysInFrench = { '1': 'Lundi', '2': 'Mardi', '3': 'Mercredi', '4': 'Jeudi', '5': 'Vendredi', '6': 'Samedi', '0': 'Dimanche' };
+export const daysInFrench = { '1': 'Lun', '2': 'Mar', '3': 'Mer', '4': 'Jeu', '5': 'Ven', '6': 'Sam', '0': 'Dim' };
 export const months = { '0': 'janvier', '1': 'février', '2': 'mars', '3': 'avril', '4': 'mai', '5': 'juin', '6': 'juillet', '7': 'août', '8': 'septembre', '9': 'octobre', '10': 'novembre', '11': 'décembre', };
 export const monthsLengths = (year: number) => {
     const isLeapYear = !(year%4) && !!(year%100) || !(year%400);

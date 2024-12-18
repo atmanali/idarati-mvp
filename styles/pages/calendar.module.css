@@ -3,6 +3,7 @@
     flex: 1;
     padding: .25em;
     overflow: hidden;
+    font-family: monospace;
 }
 .calendarContainer > header {
     display: flex;
@@ -27,7 +28,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-weight: bolder;
+    font-weight: bold;
 }
 .resetToday {
     border-radius: 10px;
@@ -47,15 +48,13 @@
 }
 
 @media (max-width: 500px) {
-    .calendarContainer > header {
-        font-size: small;
-        font-weight: bold;
+    .calendarContainer {
+        font-size: x-small;
     }
 }
 @media (max-width: 450px) {
-    .calendarContainer > header {
-        font-size: x-small;
-        font-weight: bold;
+    .calendarContainer {
+        font-size: xx-small;
     }
 }
 
@@ -75,6 +74,8 @@
             "fifteen    fifteenmon    fifteentue   fifteenwed    fifteenthu    fifteenfri     fifteensat    fifteensun"
             "sixteen    sixteenmon    sixteentue   sixteenwed    sixteenthu    sixteenfri     sixteensat    sixteensun"
             ;
+    grid-template-rows: repeat(10, 10%);
+    grid-template-columns: repeat(8, 12.5%);
     overflow: scroll;
     scrollbar-width: none;
 }
@@ -87,81 +88,71 @@
 .calendarGrid > div:hover {
     filter: brightness(.95);
 }
-.calendarGrid > div[class*="mon"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="tue"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="wed"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="thu"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="fri"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="sat"] {
-    min-width: 100px;
-}
-.calendarGrid > div[class*="sun"] {
-    min-width: 100px;
-}
 
-
-.sun { grid-area: sun; }
-.mon { grid-area: mon; }
-.tue { grid-area: tue; }
-.wed { grid-area: wed; }
-.thu { grid-area: thu; }
-.fri { grid-area: fri; }
-.sat { grid-area: sat; }
+.sun {
+    grid-area: sun;
+    cursor: default;
+}
+.mon {
+    grid-area: mon;
+    cursor: default;
+}
+.tue {
+    grid-area: tue;
+    cursor: default;
+}
+.wed {
+    grid-area: wed;
+    cursor: default;
+}
+.thu {
+    grid-area: thu;
+    cursor: default;
+}
+.fri {
+    grid-area: fri;
+    cursor: default;
+}
+.sat {
+    grid-area: sat;
+    cursor: default;
+}
 
 .eight {
     grid-area: eight;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .nine {
     grid-area: nine;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .ten {
     grid-area: ten;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .eleven {
     grid-area: eleven;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .twelve {
     grid-area: twelve;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .thirteen {
     grid-area: thirteen;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .fourteen {
     grid-area: fourteen;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .fifteen {
     grid-area: fifteen;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 .sixteen {
     grid-area: sixteen;
-    min-width: 50px;
-    font-size: x-small;
+    cursor: default;
 }
 
 

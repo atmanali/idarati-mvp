@@ -15,7 +15,7 @@ export default function () {
     const [daysOfWeek, setDaysOfWeek] = useState<Date[]>();
 
     const currentUser = getCurrentUser();
-    const { appointments } = useAppointments({
+    const { appointments, refetch } = useAppointments({
         where: {
             start_date: {
                 gte: firstDayOfWeek,
@@ -40,7 +40,8 @@ export default function () {
                 new Date(
                     firstDayOfWeek?.getTime() + index*lengthOfOneDay
                 )
-        ))
+        ));
+        refetch();
     }, [firstDayOfWeek])
 
     const calculateDayOfMonth = (daysOffset: number = 0) => {
@@ -97,6 +98,7 @@ export default function () {
                     calendarClassName => (
                         <CalendarItem
                             className={styles[calendarClassName]}
+                            anchor={calendarClassName}
                             appointments={filteredAppointmentsByCalendarClassname(appointments, calendarClassName)}
                         />
                     )
