@@ -8,7 +8,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export default function ({ appointments, children, ...props }: Props) {
-    return (<div className={classNames([props.className, styles.calendarItem])}>
+    return (<div className={classNames([props?.className, styles.calendarItem])}>
         {children}
     </div>)
 }

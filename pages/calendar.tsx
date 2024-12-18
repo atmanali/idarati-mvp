@@ -1,38 +1,38 @@
 import styles from "@styles/pages/calendar.module.css";
 import { useAppointments } from "@services/appointments";
-import { arrayOfCalendarClassNames, days, daysInFrench, isToday, months, monthsLengths } from "@utils/calendarUtils";
+import { calendarClassNames, days, daysInFrench, filteredAppointmentsByCalendarClassname, isToday, lengthOfOneDay, lengthOfOneWeek, months, monthsLengths } from "@utils/calendarUtils";
 import CalendarItem from "@components/CalendarItem/CalendarItem";
 import { useEffect, useState } from "react";
 import IconButton from "@components/IconButton/IconButton";
 import Label from "@components/Label/Label";
 import { classNames } from "@utils/namings";
+import { getCurrentUser } from "@utils/authUtils";
 
-
-type TimeSlot = {
-    start: Date;
-    end: Date;
-}
-type Props = {
-    timeSlots: TimeSlot[];
-}
-
-const lengthOfOneWeek = 1000*60*60*24*7;
-const lengthOfOneDay = 1000*60*60*24;
 
 export default function () {
-    const { appointments, isFetched } = useAppointments();
     const [today, setToday] = useState<Date>(new Date());
     const [firstDayOfWeek, setFirstDayOfWeek] = useState<Date>();
     const [daysOfWeek, setDaysOfWeek] = useState<Date[]>();
-    
-    useEffect(() => {
-        isFetched && console.log({appointments, firstDayOfWeek});
-    }, [isFetched])
+
+    const currentUser = getCurrentUser();
+    const { appointments } = useAppointments({
+        where: {
+            start_date: {
+                gte: firstDayOfWeek,
+                lte: new Date(firstDayOfWeek?.getTime()+lengthOfOneWeek),
+            },
+            users: { some: { user_id: currentUser.id } }
+        },
+        include: { users: true }
+    });
 
     useEffect(() => {
-        setFirstDayOfWeek(new Date(
-            today.getTime() - (today.getDay()-1)*lengthOfOneDay
-        ));
+        const tmpDate = new Date(today?.getTime() - (today?.getDay()-1)*lengthOfOneDay);
+        tmpDate?.setSeconds(0);
+        tmpDate?.setMinutes(0);
+        tmpDate?.setHours(0);
+
+        setFirstDayOfWeek( tmpDate );
     }, [today])
     useEffect(() => {
         setDaysOfWeek(
@@ -43,7 +43,7 @@ export default function () {
         ))
     }, [firstDayOfWeek])
 
-    const calculateDayOfMonth = (daysOffset: number = 0) =>{
+    const calculateDayOfMonth = (daysOffset: number = 0) => {
         const dayNumber = 
             (firstDayOfWeek?.getDate()+daysOffset)%monthsLengths(firstDayOfWeek?.getFullYear())[firstDayOfWeek?.getMonth()];
         return (!!daysOffset && dayNumber<6) ? dayNumber+1 : dayNumber;
@@ -56,8 +56,16 @@ export default function () {
         <div className={classNames([styles.calendarContainer, "vstack"])}>
             <header>
                 <div className="calendar-navigation-buttons">
-                    <IconButton size="extraSmall" iconUrl="/chevron_left.svg" onClick={() => setToday(new Date(today.getTime() - lengthOfOneWeek))} />
-                    <IconButton size="extraSmall" iconUrl="/chevron_right.svg" onClick={() => setToday(new Date(today.getTime() + lengthOfOneWeek))} />
+                    <IconButton
+                        size="extraSmall"
+                        iconUrl="/chevron_left.svg"
+                        onClick={() => setToday(new Date(today.getTime() - lengthOfOneWeek))}
+                    />
+                    <IconButton
+                        size="extraSmall"
+                        iconUrl="/chevron_right.svg"
+                        onClick={() => setToday(new Date(today.getTime() + lengthOfOneWeek))}
+                    />
                 </div>
                 <div className="calendar-title">
                     <span>Semaine du {firstDayOfWeekWithMonth()}</span>
@@ -85,8 +93,13 @@ export default function () {
                 <CalendarItem className={styles.fourteen}>14h-15h</CalendarItem>
                 <CalendarItem className={styles.fifteen}>15h-16h</CalendarItem>
                 <CalendarItem className={styles.sixteen}>16h-17h</CalendarItem>
-                {arrayOfCalendarClassNames.map(
-                    calendarClassName => <CalendarItem className={styles[calendarClassName]} appointments={appointments} />
+                {calendarClassNames.map(
+                    calendarClassName => (
+                        <CalendarItem
+                            className={styles[calendarClassName]}
+                            appointments={filteredAppointmentsByCalendarClassname(appointments, calendarClassName)}
+                        />
+                    )
                 )}
             </div>
             <footer className="hstack">calendar footer</footer>
