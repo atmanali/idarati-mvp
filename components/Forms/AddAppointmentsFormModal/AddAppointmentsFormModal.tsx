@@ -1,6 +1,6 @@
 import styles from "./AddAppointmentsFormModal.module.css";
 import { ModalProps } from "@components/Modals/Modal";
-import ModalForm from "@components/Modals/ModalForm";
+import ModalForm from "@components/Modals/ModalForm/ModalForm";
 import React, { useEffect, useState } from "react";
 import Input from "@components/Input";
 import { formData } from "@utils/formUtils";
@@ -61,12 +61,13 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
 
     const remove = (userId: string) => setSelectedUsers(selectedUsers?.filter((user) => user?.id != userId))
 
+    //https://stock.adobe.com/fr/search?filters%5Bcontent_type%3Aphoto%5D=1&filters%5Bcontent_type%3Aillustration%5D=1&filters%5Bcontent_type%3Azip_vector%5D=1&filters%5Bcontent_type%3Avideo%5D=1&filters%5Bcontent_type%3Atemplate%5D=1&filters%5Bcontent_type%3A3d%5D=1&filters%5Bcontent_type%3Aimage%5D=1&k=rendez-vous+agenda&order=relevance&limit=100&search_page=1&search_type=usertyped&acp=&aco=rendez-vous+agenda&get_facets=0&asset_id=28963293
     return (<>
-        <ModalForm title="Ajouter un rendez-vous" open={open} onSubmit={onSubmit} onCancel={onCancel} >
-            <Input name="name" placeholder="Nom du rendez-vous" required />
-            <Input name="type" placeholder="Type du rendez-vous" required />
-            <Input name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
-            <Input name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" required />
+        <ModalForm title="Ajouter un rendez-vous" formImage="add-appointment-form-image.jpg" open={open} onSubmit={onSubmit} onCancel={onCancel} >
+            <Input soft name="name" placeholder="Nom du rendez-vous" required />
+            <Input soft name="type" placeholder="Type du rendez-vous" required />
+            <Input soft name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
+            <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" required />
             <div className={classNames([styles.listOfUsers])}>
                 <Dropdown hideArrow items={
                     filteredUsers?.length ?
@@ -91,8 +92,8 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
                             }
                         </div>)
                     )}
-                    </>) : null}
-                </div>
+                </>) : null}
+            </div>
         </ModalForm>
     </>)
 }

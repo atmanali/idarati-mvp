@@ -4,13 +4,14 @@ import { classNames } from "@utils/namings";
 import Chip from "@components/Chip";
 
 type Props = {
+    soft?: boolean;
     size?: 'small' | 'medium' | 'large';
     color?: 'success' | 'error' | 'warning' | 'neutral' | 'info';
     options?: string[];
     icon?: React.ReactNode;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color'|'size' >;
 
-const Input = ({color='neutral', size='small', options, icon, ...props}: Props) => {
+const Input = ({ soft=false, color='neutral', size='small', options, icon, ...props }: Props) => {
     const [value, setValue] = useState<string | number | readonly string[]>('');
     const [localOptions, setLocalOptions] = useState<string[]>(options);
     const [isOpenOptionsPane, setIsOpenOptionsPane] = useState(false);
@@ -41,7 +42,9 @@ const Input = ({color='neutral', size='small', options, icon, ...props}: Props) 
         setIsOpenOptionsPane(false);
     }
 
-    useEffect(() => {props?.value && setValue(props.value)}, [props?.value])
+    useEffect(() => {
+        props?.value && setValue(props.value)
+    }, [props?.value])
 
     const pattern = options?.length && `(${options?.join('|')})`
 
