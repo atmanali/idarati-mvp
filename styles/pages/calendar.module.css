@@ -1,0 +1,415 @@
+.calendarContainer {
+    background-color: white;
+    flex: 1;
+    padding: .25em;
+    overflow: hidden;
+    font-family: monospace;
+}
+.calendarContainer > header {
+    display: flex;
+    background-color: var(--background-color);
+    align-items: center;
+    border-radius: 10px;
+    padding: .5em;
+    text-align: center;
+    cursor: default;
+}
+.calendarContainer > header > div[class="calendar-navigation-buttons"] {
+    display: inline-block;
+    box-shadow: 0 5px 5px -3px var(--foreground-color-primary);
+    border-radius: 10px;
+    transition-duration: 100ms;
+}
+.calendarContainer > header > div[class="calendar-navigation-buttons"]:hover {
+    box-shadow: none;
+}
+.calendarContainer > header > div[class="calendar-title"] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+}
+.resetToday {
+    border-radius: 10px;
+    box-shadow: 0 5px 5px -3px var(--foreground-color-primary);
+    padding: .5em;
+    transition-duration: 100ms;
+    cursor: pointer;
+}
+.resetToday:hover {
+    box-shadow: none;
+}
+
+.calendarContainer > footer {
+    background-color: var(--background-color);
+    justify-content: center;
+    border-radius: 10px;
+}
+
+@media (max-width: 500px) {
+    .calendarContainer {
+        font-size: x-small;
+    }
+}
+@media (max-width: 450px) {
+    .calendarContainer {
+        font-size: xx-small;
+    }
+}
+
+.calendarGrid {
+    display: grid;
+    flex: 1;
+    padding-bottom: .5em;
+    grid-template-areas: 
+            "hours      mon           tue          wed           thu           fri            sat           sun"
+            "eight      eightmon      eighttue     eightwed      eightthu      eightfri       eightsat      eightsun"
+            "nine       ninemon       ninetue      ninewed       ninethu       ninefri        ninesat       ninesun"
+            "ten        tenmon        tentue       tenwed        tenthu        tenfri         tensat        tensun"
+            "eleven     elevenmon     eleventue    elevenwed     eleventhu     elevenfri      elevensat     elevensun"
+            "twelve     twelvemon     twelvetue    twelvewed     twelvethu     twelvefri      twelvesat     twelvesun"
+            "thirteen   thirteenmon   thirteentue  thirteenwed   thirteenthu   thirteenfri    thirteensat   thirteensun"
+            "fourteen   fourteenmon   fourteentue  fourteenwed   fourteenthu   fourteenfri    fourteensat   fourteensun"
+            "fifteen    fifteenmon    fifteentue   fifteenwed    fifteenthu    fifteenfri     fifteensat    fifteensun"
+            "sixteen    sixteenmon    sixteentue   sixteenwed    sixteenthu    sixteenfri     sixteensat    sixteensun"
+            ;
+    grid-template-rows: repeat(10, 10%);
+    grid-template-columns: repeat(8, 12.5%);
+    overflow: scroll;
+    scrollbar-width: none;
+}
+.calendarGrid > div:not([class*="isToday"]) {
+    background-color: white;
+}
+.isToday {
+    background-color: color-mix(in srgb, var(--info-background) , white);
+}
+.calendarGrid > div:hover {
+    filter: brightness(.95);
+}
+
+.sun {
+    grid-area: sun;
+    cursor: default;
+}
+.mon {
+    grid-area: mon;
+    cursor: default;
+}
+.tue {
+    grid-area: tue;
+    cursor: default;
+}
+.wed {
+    grid-area: wed;
+    cursor: default;
+}
+.thu {
+    grid-area: thu;
+    cursor: default;
+}
+.fri {
+    grid-area: fri;
+    cursor: default;
+}
+.sat {
+    grid-area: sat;
+    cursor: default;
+}
+
+.eight {
+    grid-area: eight;
+    cursor: default;
+}
+.nine {
+    grid-area: nine;
+    cursor: default;
+}
+.ten {
+    grid-area: ten;
+    cursor: default;
+}
+.eleven {
+    grid-area: eleven;
+    cursor: default;
+}
+.twelve {
+    grid-area: twelve;
+    cursor: default;
+}
+.thirteen {
+    grid-area: thirteen;
+    cursor: default;
+}
+.fourteen {
+    grid-area: fourteen;
+    cursor: default;
+}
+.fifteen {
+    grid-area: fifteen;
+    cursor: default;
+}
+.sixteen {
+    grid-area: sixteen;
+    cursor: default;
+}
+
+
+.eightsun{
+    grid-area: eightsun;
+    cursor: cell;
+}
+.eightmon{
+    grid-area: eightmon;
+    cursor: cell;
+}
+.eighttue{
+    grid-area: eighttue;
+    cursor: cell;
+}
+.eightwed{
+    grid-area: eightwed;
+    cursor: cell;
+}
+.eightthu{
+    grid-area: eightthu;
+    cursor: cell;
+}
+.eightfri{
+    grid-area: eightfri;
+    cursor: cell;
+}
+.eightsat{
+    grid-area: eightsat;
+    cursor: cell;
+}
+
+.ninesun{
+    grid-area: ninesun;
+    cursor: cell;
+}
+.ninemon{
+    grid-area: ninemon;
+    cursor: cell;
+}
+.ninetue{
+    grid-area: ninetue;
+    cursor: cell;
+}
+.ninewed{
+    grid-area: ninewed;
+    cursor: cell;
+}
+.ninethu{
+    grid-area: ninethu;
+    cursor: cell;
+}
+.ninefri{
+    grid-area: ninefri;
+    cursor: cell;
+}
+.ninesat{
+    grid-area: ninesat;
+    cursor: cell;
+}
+
+.tensun{
+    grid-area: tensun;
+    cursor: cell;
+}
+.tenmon{
+    grid-area: tenmon;
+    cursor: cell;
+}
+.tentue{
+    grid-area: tentue;
+    cursor: cell;
+}
+.tenwed{
+    grid-area: tenwed;
+    cursor: cell;
+}
+.tenthu{
+    grid-area: tenthu;
+    cursor: cell;
+}
+.tenfri{
+    grid-area: tenfri;
+    cursor: cell;
+}
+.tensat{
+    grid-area: tensat;
+    cursor: cell;
+}
+
+.elevensun{
+    grid-area: elevensun;
+    cursor: cell;
+}
+.elevenmon{
+    grid-area: elevenmon;
+    cursor: cell;
+}
+.eleventue{
+    grid-area: eleventue;
+    cursor: cell;
+}
+.elevenwed{
+    grid-area: elevenwed;
+    cursor: cell;
+}
+.eleventhu{
+    grid-area: eleventhu;
+    cursor: cell;
+}
+.elevenfri{
+    grid-area: elevenfri;
+    cursor: cell;
+}
+.elevensat{
+    grid-area: elevensat;
+    cursor: cell;
+}
+.twelvesun{
+    grid-area: twelvesun;
+    cursor: cell;
+}
+.twelvemon{
+    grid-area: twelvemon;
+    cursor: cell;
+}
+.twelvetue{
+    grid-area: twelvetue;
+    cursor: cell;
+}
+.twelvewed{
+    grid-area: twelvewed;
+    cursor: cell;
+}
+.twelvethu{
+    grid-area: twelvethu;
+    cursor: cell;
+}
+.twelvefri{
+    grid-area: twelvefri;
+    cursor: cell;
+}
+.twelvesat{
+    grid-area: twelvesat;
+    cursor: cell;
+}
+
+.thirteensun{
+    grid-area: thirteensun;
+    cursor: cell;
+}
+.thirteenmon{
+    grid-area: thirteenmon;
+    cursor: cell;
+}
+.thirteentue{
+    grid-area: thirteentue;
+    cursor: cell;
+}
+.thirteenwed{
+    grid-area: thirteenwed;
+    cursor: cell;
+}
+.thirteenthu{
+    grid-area: thirteenthu;
+    cursor: cell;
+}
+.thirteenfri{
+    grid-area: thirteenfri;
+    cursor: cell;
+}
+.thirteensat{
+    grid-area: thirteensat;
+    cursor: cell;
+}
+.fourteensun{
+    grid-area: fourteensun;
+    cursor: cell;
+}
+.fourteenmon{
+    grid-area: fourteenmon;
+    cursor: cell;
+}
+.fourteentue{
+    grid-area: fourteentue;
+    cursor: cell;
+}
+.fourteenwed{
+    grid-area: fourteenwed;
+    cursor: cell;
+}
+.fourteenthu{
+    grid-area: fourteenthu;
+    cursor: cell;
+}
+.fourteenfri{
+    grid-area: fourteenfri;
+    cursor: cell;
+}
+.fourteensat{
+    grid-area: fourteensat;
+    cursor: cell;
+}
+
+.fifteensun{
+    grid-area: fifteensun;
+    cursor: cell;
+}
+.fifteenmon{
+    grid-area: fifteenmon;
+    cursor: cell;
+}
+.fifteentue{
+    grid-area: fifteentue;
+    cursor: cell;
+}
+.fifteenwed{
+    grid-area: fifteenwed;
+    cursor: cell;
+}
+.fifteenthu{
+    grid-area: fifteenthu;
+    cursor: cell;
+}
+.fifteenfri{
+    grid-area: fifteenfri;
+    cursor: cell;
+}
+.fifteensat{
+    grid-area: fifteensat;
+    cursor: cell;
+}
+.sixteensun{
+    grid-area: sixteensun;
+    cursor: cell;
+}
+.sixteenmon{
+    grid-area: sixteenmon;
+    cursor: cell;
+}
+.sixteentue{
+    grid-area: sixteentue;
+    cursor: cell;
+}
+.sixteenwed{
+    grid-area: sixteenwed;
+    cursor: cell;
+}
+.sixteenthu{
+    grid-area: sixteenthu;
+    cursor: cell;
+}
+.sixteenfri{
+    grid-area: sixteenfri;
+    cursor: cell;
+}
+.sixteensat{
+    grid-area: sixteensat;
+    cursor: cell;
+}
