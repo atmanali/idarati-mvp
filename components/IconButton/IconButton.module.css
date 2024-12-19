@@ -1,0 +1,43 @@
+.container {
+    display: inline-flex;
+    background-color: inherit;
+    border-radius: 100px;
+    border-width: 0;
+    aspect-ratio: 1;
+    align-items: center;
+    cursor: pointer;
+}
+.container:disabled {
+    cursor: not-allowed;
+    background-color: revert-layer;
+}
+
+.error:hover {
+    background-color: var(--error-background);
+}
+.success:hover {
+    background-color: var(--success-background);
+}
+.warning:hover {
+    background-color: var(--warning-background);
+}
+.neutral:hover {
+    background-color: var(--neutral-background);
+}
+.info:hover {
+    background-color: var(--info-background);
+}
+
+.small {
+    padding: unset;
+}
+.medium {
+    padding: 2px;
+}
+.large {
+    padding: 3px;
+}
+
+.icon {
+    z-index: 1;
+}

@@ -1,6 +1,6 @@
 import Input from "@components/Input";
 import { ModalProps } from "@components/Modals/Modal";
-import ModalForm from "@components/Modals/ModalForm";
+import ModalForm from "@components/Modals/ModalForm/ModalForm";
 import { UsersModel } from "@models/index";
 import { Prisma } from "@prisma/client";
 import { createUsers, usersKey } from "@services/users";
@@ -11,10 +11,12 @@ import Image from "next/image";
 import React, { FormEvent, useState } from "react";
 
 
-type Props = ModalProps;
+type Props = ModalProps & {
+    formImage?: string;
+};
 
 
-export default function ({...modalProps}: Props) {
+export default function ({formImage, ...modalProps}: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
     // creation mutation
@@ -22,7 +24,6 @@ export default function ({...modalProps}: Props) {
         mutationFn: async (params: Prisma.usersCreateManyArgs) => await createUsers(params),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: [usersKey]});
-            console.log("L'utilisateur a été ajouté");
         },
         onError: () => {console.log("L'utilisateur n'a pas été ajouté")}
     })
@@ -50,10 +51,11 @@ export default function ({...modalProps}: Props) {
         setShowPassword(!showPassword);
     }
 
-
+    //https://www.flaticon.com/fr/icone-gratuite/ajouter-un-utilisateur_609195
     return (<>
-        <ModalForm {...modalProps} onSubmit={onSubmit} >
+        <ModalForm {...modalProps} formImage={"/add-user-form-image.png"} onSubmit={onSubmit} >
             <Input
+                soft
                 required
                 name="last_name"
                 placeholder="Nom de famille"
@@ -61,6 +63,7 @@ export default function ({...modalProps}: Props) {
                 onKeyDown={handleEnterPressed}
             />
             <Input
+                soft
                 required
                 name="first_name"
                 placeholder="Prénom"
@@ -68,6 +71,7 @@ export default function ({...modalProps}: Props) {
                 onKeyDown={handleEnterPressed}
             />
             <Input
+                soft
                 required
                 name="email"
                 placeholder="Email"
@@ -75,6 +79,7 @@ export default function ({...modalProps}: Props) {
                 onKeyDown={handleEnterPressed}
             />
             <Input
+                soft
                 required
                 name="role"
                 placeholder="Role"
@@ -82,13 +87,15 @@ export default function ({...modalProps}: Props) {
                 onKeyDown={handleEnterPressed}
             />
             <Input
+                soft
                 required
                 name="username"
                 placeholder="Nom d'utilisateur"
                 type="text"
                 onKeyDown={handleEnterPressed}
             />
-            <Input 
+            <Input
+                soft
                 required
                 name="password"
                 placeholder="Mot de passe"

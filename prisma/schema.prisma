@@ -90,8 +90,8 @@ model users_appointments {
   appointment_id Int
   appointment appointments @relation(fields: [appointment_id], references: [id])
 
-  accepted Boolean
-  absent Boolean
+  accepted Boolean?
+  absent Boolean?
 
   @@id([user_id, appointment_id])
 }
