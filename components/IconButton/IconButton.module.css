@@ -9,6 +9,7 @@
 }
 .container:disabled {
     cursor: not-allowed;
+    background-color: revert-layer;
 }
 
 .error:hover {
