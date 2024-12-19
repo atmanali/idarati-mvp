@@ -11,6 +11,7 @@ export const monthsLengths = (year: number) => {
 }
 export const lengthOfOneWeek = 1000*60*60*24*7;
 export const lengthOfOneDay = 1000*60*60*24;
+export const lengthOfOneHour = 1000*60*60;
 
 export const calendarClassNames = [ 'eightsun', 'eightmon', 'eighttue', 'eightwed', 'eightthu', 'eightfri', 'eightsat', 'ninesun', 'ninemon', 'ninetue', 'ninewed', 'ninethu', 'ninefri', 'ninesat', 'tensun', 'tenmon', 'tentue', 'tenwed', 'tenthu', 'tenfri', 'tensat', 'elevensun', 'elevenmon', 'eleventue', 'elevenwed', 'eleventhu', 'elevenfri', 'elevensat', 'twelvesun', 'twelvemon', 'twelvetue', 'twelvewed', 'twelvethu', 'twelvefri', 'twelvesat', 'thirteensun', 'thirteenmon', 'thirteentue', 'thirteenwed', 'thirteenthu', 'thirteenfri', 'thirteensat', 'fourteensun', 'fourteenmon', 'fourteentue', 'fourteenwed', 'fourteenthu', 'fourteenfri', 'fourteensat', 'fifteensun', 'fifteenmon', 'fifteentue', 'fifteenwed', 'fifteenthu', 'fifteenfri', 'fifteensat', 'sixteensun', 'sixteenmon', 'sixteentue', 'sixteenwed', 'sixteenthu', 'sixteenfri', 'sixteensat' ]
 

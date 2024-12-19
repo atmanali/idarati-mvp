@@ -4,13 +4,15 @@ import ModalForm from "@components/Modals/ModalForm/ModalForm";
 import React, { useEffect, useState } from "react";
 import Input from "@components/Input";
 import { formData } from "@utils/formUtils";
-import { createAppointments } from "@services/appointments";
+import { appointmentsKey, createAppointments } from "@services/appointments";
 import { AppointmentsModel, UsersModel } from "@models/index";
 import { classNames, userName } from "@utils/namings";
 import UserCard from "@components/Cards/UserCard";
 import IconButton from "@components/IconButton/IconButton";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { useMutation } from "@tanstack/react-query";
+import { lengthOfOneDay, lengthOfOneHour } from "@utils/calendarUtils";
+import queryClient from "@utils/queryClientUtils";
 
 type Props = {
     user?: Partial<UsersModel>;
@@ -21,13 +23,15 @@ type Props = {
 export default function( {open, onCancel, user, start_date, filteredUsers}: Props ) {
     const [selectedUsers, setSelectedUsers] = useState<Partial<UsersModel>[]>();
     const [startDate, setStartDate] = useState<string>();
+    const [endDate, setEndDate] = useState<string>();
 
     const { mutateAsync } = useMutation({
         mutationFn:
             async ({appointment, usersIds}: {appointment: AppointmentsModel, usersIds: string[]}) =>
                 await createAppointments(appointment, usersIds),
         onSuccess: async (data) => {
-            console.log('appointment created')
+            console.log('appointment created');
+            queryClient.invalidateQueries({queryKey: [ appointmentsKey ]})
         },
         onError: async (data) => {
             console.log('appointment not created')
@@ -57,6 +61,9 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
     }, [user])
     useEffect(() => {
         start_date && setStartDate(formatDate(start_date));
+        start_date && setEndDate(formatDate(new Date(
+            start_date?.getTime() + lengthOfOneDay + lengthOfOneHour
+        )))
     }, [start_date])
 
     const remove = (userId: string) => setSelectedUsers(selectedUsers?.filter((user) => user?.id != userId))
@@ -65,9 +72,9 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
     return (<>
         <ModalForm title="Ajouter un rendez-vous" formImage="add-appointment-form-image.jpg" open={open} onSubmit={onSubmit} onCancel={onCancel} >
             <Input soft name="name" placeholder="Nom du rendez-vous" required />
-            <Input soft name="type" placeholder="Type du rendez-vous" required />
+            <Input soft name="type" placeholder="Type du rendez-vous" options={["administratif","cours","entretien"]} required />
             <Input soft name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
-            <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" required />
+            <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" value={endDate} required />
             <div className={classNames([styles.listOfUsers])}>
                 <Dropdown hideArrow items={
                     filteredUsers?.length ?
