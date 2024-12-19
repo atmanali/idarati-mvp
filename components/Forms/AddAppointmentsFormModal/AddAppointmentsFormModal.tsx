@@ -62,7 +62,7 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
     useEffect(() => {
         start_date && setStartDate(formatDate(start_date));
         start_date && setEndDate(formatDate(new Date(
-            start_date?.getTime() + lengthOfOneDay + lengthOfOneHour
+            start_date?.getTime() + lengthOfOneHour
         )))
     }, [start_date])
 
