@@ -9,6 +9,7 @@ import { classNames } from "@utils/namings";
 import { getCurrentUser } from "@utils/authUtils";
 import AddAppointmentsFormModal from "@components/Forms/AddAppointmentsFormModal/AddAppointmentsFormModal";
 import { useUsers } from "@services/users";
+import { AppointmentsModel } from "@models/index";
 
 
 export default function () {
@@ -17,6 +18,8 @@ export default function () {
     const [daysOfWeek, setDaysOfWeek] = useState<Date[]>();
     const [isOpenAddAppointmentsFormModal, setIsOpenAddAppointmentsFormModal] = useState(false);
     const [appointmentStartDate, setAppointmentStartDate] = useState<Date>();
+    const [filteredAppointments, setFilteredAppointments] = useState<Partial<AppointmentsModel>[]>();
+    const [filterByType, setFilterByType] = useState<'administratif' | 'cours' | 'entretien' | ''>('');
 
     const currentUser = getCurrentUser();
     const { appointments, refetch } = useAppointments({
@@ -52,6 +55,12 @@ export default function () {
         ));
         refetch();
     }, [firstDayOfWeek])
+
+    useEffect(() => {
+        filterByType
+        ? setFilteredAppointments(appointments?.filter(appointment => appointment.type===filterByType))
+        : setFilteredAppointments(appointments)
+    }, [filterByType, appointments])
 
     const calculateDayOfMonth = (daysOffset: number = 0) => {
         const dayNumber = 
@@ -118,7 +127,7 @@ export default function () {
                         <CalendarItem
                             className={styles[calendarClassName]}
                             anchor={calendarClassName}
-                            appointments={filteredAppointmentsByCalendarClassname(appointments, calendarClassName)}
+                            appointments={filteredAppointmentsByCalendarClassname(filteredAppointments, calendarClassName)}
                             onClick={(event) => {
                                 event.preventDefault();
                                 event.stopPropagation();
@@ -128,7 +137,13 @@ export default function () {
                     )
                 )}
             </div>
-            <footer className="hstack">calendar footer</footer>
+            <footer>
+                Filtrer par type:
+                {['administratif','cours','entretien', ''].map(
+                    (type: 'administratif' | 'cours' | 'entretien' | '') => 
+                        <Label color={type && "info"} onClick={() => setFilterByType(type)}>{type || 'tous'}</Label>
+                )}
+            </footer>
         </div>
         <AddAppointmentsFormModal
             open={isOpenAddAppointmentsFormModal}

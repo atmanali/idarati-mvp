@@ -27,7 +27,7 @@ export const isToday = (day: Date) => {
 const getClassNameDay = (calendarClassName: string) => calendarClassName?.slice(calendarClassName?.length-3);
 const getClassNameHour = (calendarClassName: string) => calendarClassName?.slice(0, calendarClassName?.length-3);
 
-export const filteredAppointmentsByCalendarClassname = (appointments: AppointmentsModel[], calendarClassName: string) => {
+export const filteredAppointmentsByCalendarClassname = (appointments: Partial<AppointmentsModel>[], calendarClassName: string) => {
     const classNameDay = getClassNameDay(calendarClassName);
     const classNameHour = getClassNameHour(calendarClassName);
     return appointments?.length && appointments.filter((appointment) => {
