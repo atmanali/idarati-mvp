@@ -11,6 +11,7 @@ import UserCard from "@components/Cards/UserCard";
 import IconButton from "@components/IconButton/IconButton";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { useMutation } from "@tanstack/react-query";
+import { lengthOfOneDay, lengthOfOneHour } from "@utils/calendarUtils";
 
 type Props = {
     user?: Partial<UsersModel>;
@@ -21,6 +22,7 @@ type Props = {
 export default function( {open, onCancel, user, start_date, filteredUsers}: Props ) {
     const [selectedUsers, setSelectedUsers] = useState<Partial<UsersModel>[]>();
     const [startDate, setStartDate] = useState<string>();
+    const [endDate, setEndDate] = useState<string>();
 
     const { mutateAsync } = useMutation({
         mutationFn:
@@ -57,6 +59,9 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
     }, [user])
     useEffect(() => {
         start_date && setStartDate(formatDate(start_date));
+        start_date && setEndDate(formatDate(new Date(
+            start_date?.getTime() + lengthOfOneDay + lengthOfOneHour
+        )))
     }, [start_date])
 
     const remove = (userId: string) => setSelectedUsers(selectedUsers?.filter((user) => user?.id != userId))
@@ -67,7 +72,7 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
             <Input soft name="name" placeholder="Nom du rendez-vous" required />
             <Input soft name="type" placeholder="Type du rendez-vous" required />
             <Input soft name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
-            <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" required />
+            <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" value={endDate} required />
             <div className={classNames([styles.listOfUsers])}>
                 <Dropdown hideArrow items={
                     filteredUsers?.length ?

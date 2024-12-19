@@ -8,6 +8,7 @@ import Label from "@components/Label/Label";
 import { classNames } from "@utils/namings";
 import { getCurrentUser } from "@utils/authUtils";
 import AddAppointmentsFormModal from "@components/Forms/AddAppointmentsFormModal/AddAppointmentsFormModal";
+import { useUsers } from "@services/users";
 
 
 export default function () {
@@ -27,6 +28,11 @@ export default function () {
             users: { some: { user_id: currentUser.id } }
         },
         include: { users: true }
+    });
+    const { users } = useUsers({
+        where: {
+            id: {not: currentUser?.id}
+        }
     });
 
     useEffect(() => {
@@ -128,6 +134,7 @@ export default function () {
             open={isOpenAddAppointmentsFormModal}
             onCancel={() => setIsOpenAddAppointmentsFormModal(false)}
             start_date={appointmentStartDate}
+            filteredUsers={users}
         />
     </>)
 }
