@@ -43,8 +43,15 @@
 
 .calendarContainer > footer {
     background-color: var(--background-color);
-    justify-content: center;
+    display: flex;
+    gap: .5em;
+    align-items: baseline;
+    padding: .25em;
     border-radius: 10px;
+    cursor: default;
+}
+.calendarContainer > footer > label {
+    cursor: pointer;
 }
 
 @media (max-width: 500px) {
