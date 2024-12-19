@@ -54,7 +54,7 @@ const Input = ({ soft=false, color='neutral', size='small', options, icon, ...pr
         <input
             {...props}
             onClick={handleInputClick}
-            className={classNames([styles.input, styles[color], styles[size]])}
+            className={classNames([styles.input, styles[color], styles[size], soft&&styles.soft])}
             onChange={onInputChange}
             value={value}
             pattern={pattern}

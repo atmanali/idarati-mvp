@@ -72,7 +72,7 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
     return (<>
         <ModalForm title="Ajouter un rendez-vous" formImage="add-appointment-form-image.jpg" open={open} onSubmit={onSubmit} onCancel={onCancel} >
             <Input soft name="name" placeholder="Nom du rendez-vous" required />
-            <Input soft name="type" placeholder="Type du rendez-vous" required />
+            <Input soft name="type" placeholder="Type du rendez-vous" options={["administratif","cours","entretien"]} required />
             <Input soft name="start_date" placeholder="Début du rendez-vous" type="datetime-local" value={startDate} required />
             <Input soft name="end_date" placeholder="Fin du rendez-vous" type="datetime-local" value={endDate} required />
             <div className={classNames([styles.listOfUsers])}>
