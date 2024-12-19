@@ -4,7 +4,7 @@ import ModalForm from "@components/Modals/ModalForm/ModalForm";
 import React, { useEffect, useState } from "react";
 import Input from "@components/Input";
 import { formData } from "@utils/formUtils";
-import { createAppointments } from "@services/appointments";
+import { appointmentsKey, createAppointments } from "@services/appointments";
 import { AppointmentsModel, UsersModel } from "@models/index";
 import { classNames, userName } from "@utils/namings";
 import UserCard from "@components/Cards/UserCard";
@@ -12,6 +12,7 @@ import IconButton from "@components/IconButton/IconButton";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { useMutation } from "@tanstack/react-query";
 import { lengthOfOneDay, lengthOfOneHour } from "@utils/calendarUtils";
+import queryClient from "@utils/queryClientUtils";
 
 type Props = {
     user?: Partial<UsersModel>;
@@ -29,7 +30,8 @@ export default function( {open, onCancel, user, start_date, filteredUsers}: Prop
             async ({appointment, usersIds}: {appointment: AppointmentsModel, usersIds: string[]}) =>
                 await createAppointments(appointment, usersIds),
         onSuccess: async (data) => {
-            console.log('appointment created')
+            console.log('appointment created');
+            queryClient.invalidateQueries({queryKey: [ appointmentsKey ]})
         },
         onError: async (data) => {
             console.log('appointment not created')

@@ -17,7 +17,7 @@ export const getAppointments = (params?: Prisma.appointmentsFindManyArgs) => {
     return fetch(route, init).then(formatResponse<AppointmentsModel[]>).then(json => json.status===200 && json.data)
 }
 
-const appointmentsKey = 'appointmentsKey';
+export const appointmentsKey = 'appointmentsKey';
 
 export const useAppointments = (params?: Prisma.appointmentsFindManyArgs) => {
     const {data, isFetched, refetch} = useQuery({
