@@ -1,0 +1,16 @@
+.calendarItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 5px -3px var(--foreground-color-primary);
+    margin: .05em;
+}
+
+.calendarAppointmentsContainer {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 3px;
+}

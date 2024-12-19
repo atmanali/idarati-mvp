@@ -1,21 +1,56 @@
 
-.form {
+.formContainer {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-.content {
-    display: flex;
-    flex-direction: column;
-    padding: 3em;
 
-    justify-content: center;
-    gap: 1.5em;
+.formContent {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    overflow: hidden;
 }
-.content > span {
+
+.form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-inline: 3em;
+    justify-content: center;
+    gap: .5em;
+}
+.form > span {
     color: var(--error-foreground);
     font-size: small;
 }
-.form > footer {
+
+.imageContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.formImage {
+    max-width: 100%;
+}
+
+.formContainer > footer {
     align-self: flex-end;
+}
+
+
+@media (max-width: 800px) {
+    .imageContainer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .formImage {
+        opacity: .1;
+        height: 100%;
+    }
 }

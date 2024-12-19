@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client"
 
 export type UsersModel = Prisma.usersCreateInput;
 export type RolesModel = Prisma.rolesCreateInput;
-export type AppointmentsModel = Prisma.appointmentsCreateInput;
+export type AppointmentsModel = Prisma.appointmentsUncheckedCreateInput;
 export type CoursesModel = Prisma.coursesCreateInput;
 export type ResultsModel = Prisma.resultsCreateManyInput;
 export type LogsModel = Prisma.logsCreateManyInput;

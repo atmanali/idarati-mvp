@@ -93,11 +93,12 @@ export default function LoginForm() {
             </Label>
         </div>
         <footer>
-            <Button type='submit' variant="plain" color="info" >Login</Button>
+            <Button type='submit' variant="plain" color="info" >Connexion</Button>
         </footer>
       </Form>
       <ResetPasswordModal
         open={isResetPasswordModalOpen}
+        setOpen={setIsResetPasswordModalOpen}
         onCancel={() => setIsResetPasswordModalOpen(false)}
         username={username}
       />

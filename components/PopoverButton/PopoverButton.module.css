@@ -1,0 +1,8 @@
+.popoverButton {
+    cursor: pointer;
+    background: none;
+    border: none;
+    flex: 1;
+    text-align: start;
+    padding-block: 0;
+}

@@ -10,7 +10,7 @@ export type AuthProps = {
 }
 
 export const authenticate = async (username: string, password: string) : Promise<AuthProps> => {
-    const route = 'api/auth/login';
+    const route = '/api/auth/login';
     const init = initRequest('post', {
         body: { username, password }
     });
@@ -26,7 +26,7 @@ export const usernameCheck = async (username: string) => {
 }
 
 export const authenticationCheck = async () => {
-    const route = 'api/auth/check-authentication';
+    const route = '/api/auth/check-authentication';
     const init = initRequest('get');
 
     return fetch(route, init).then(formatResponse<{connected: boolean}>).then(json => json.data.connected);

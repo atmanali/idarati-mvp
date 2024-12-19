@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { formatResponse, initRequest } from "utils/requestsUtils";
 
-const apiRoute = "api/users";
+const apiRoute = "/api/users";
 
 export const createUsers = (params: Prisma.usersCreateManyArgs) => {
     const init = initRequest('post', { body: params });
@@ -29,7 +29,7 @@ export const changePassword = (username: string) => {
     const route = `api/auth/reset-password?username=${username}`;
     const init = initRequest('get');
 
-    return fetch(route, init).then(formatResponse<{password: string}>).then(json => json.data.password);
+    return fetch(route, init).then(formatResponse<{status: boolean}>).then(json => json.status===200);
 }
 
 export const usersKey = 'usersKey'

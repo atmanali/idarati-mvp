@@ -27,3 +27,4 @@ export const getAuthorization = () => {
     const data = getAuthInformation();
     return data?.session_token ? `${data.user.username};${data.session_token}` : '';
 }
+export const getCurrentUser = () => getAuthInformation()?.user

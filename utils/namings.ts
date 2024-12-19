@@ -7,4 +7,10 @@ export const userName = (user: Partial<UsersModel>) => {
         : undefined;
 };
 
-export const classNames = (classNamesList: string[]) => classNamesList.filter((className) => !!className).join(' ')
+const areInSameWeek = (fixed: Date, other: Date) => {
+    const [fy,fm,fd, fwd] = [fixed.getFullYear(), fixed.getMonth(), fixed.getDate(), fixed.getDay()];
+    const [oy,om,od, owd] = [other.getFullYear(), other.getMonth(), other.getDate(), other.getDay()];
+    return (fy == oy) && (fm == om) && (fd-fwd+1 == od-owd+1);
+}
+
+export const classNames = (classNamesList: string[]) => classNamesList.filter(className => !!className).join(' ');

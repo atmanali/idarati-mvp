@@ -9,17 +9,22 @@ import { changePassword } from "@services/users";
 
 type Props = ModalProps & {username?: string};
 
-export default function ({open, title="Réinitialiser votre mot de passe", username, onCancel}: Props) {
+export default function ({open, setOpen, title="Réinitialiser votre mot de passe", username, onCancel}: Props) {
     const [isValidUsername, setIsValidUsername] = useState(false);
+    const [isResetPassword, setIsResetPassword] = useState(false);
 
     useEffect(() => {
         open && usernameCheck(username).then(setIsValidUsername);
     }, [username, open])
 
+    useEffect(() => {
+        isResetPassword && setOpen(false);
+    }, [isResetPassword])
+
     const handleResetPasswordClick: React.MouseEventHandler<HTMLButtonElement> = ( event ) => {
         event.preventDefault();
         event.stopPropagation();
-        changePassword(username);
+        changePassword(username).then(setIsResetPassword);
     }
 
     const handleCancelButtonClick: React.MouseEventHandler<HTMLButtonElement> = ( event ) => {

@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { initRequest } from "utils/requestsUtils";
 
-const apiRoute = "api/roles";
+const apiRoute = "/api/roles";
 
 export const createRoles = (params: Prisma.rolesCreateManyArgs) => {
     const init = initRequest('post', { body: params });

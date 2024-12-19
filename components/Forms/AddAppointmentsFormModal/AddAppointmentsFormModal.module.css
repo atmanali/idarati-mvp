@@ -1,0 +1,35 @@
+.listOfUsers {
+    position: relative;
+    overflow: scroll;
+    scrollbar-width: none;
+    min-height: 7em;
+    max-height: 15em;
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+    margin-bottom: 1em;
+    margin-inline-end: -2em;
+}
+.extendList {
+    min-height: 10em;
+}
+.addUsersButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: .2em;
+    z-index: 1;
+}
+
+.userOfList {
+    position: relative;
+    margin-inline-end: 2em;
+}
+.actionsForUser {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: .2em;
+    display: flex;
+    align-items: center;
+}
